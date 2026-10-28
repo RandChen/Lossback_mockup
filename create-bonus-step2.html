@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campaign Settings — Create Campaign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/create-bonus.css" />
+<link rel="stylesheet" href="css/toast.css" />
+<link rel="stylesheet" href="css/calendar.css" />
+<link rel="stylesheet" href="css/datetime-picker.css" />
+<link rel="stylesheet" href="css/create-bonus-step2.css" />
+<link rel="stylesheet" href="css/campaign-settings.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <button type="button" class="nav-item nav-item--active" aria-expanded="true">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="nav-sub">
+          <a class="nav-sub-item nav-sub-item--active" href="index.html" aria-current="page">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Lossback</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">99</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="wizard">
+
+        <!-- The back link runs the full content width; the title, the steps
+             and the cards sit in the 750 column centred beneath it. -->
+        <div class="wizard__top">
+          <a class="back-link" href="index.html" data-role="back-link">
+            <span class="icon icon--chevron-left" aria-hidden="true"></span>
+            Lossback
+          </a>
+        </div>
+
+        <div class="wizard__column">
+        <div class="wizard__head">
+          <h1>Create Campaign</h1>
+        </div>
+
+        <ol class="steps" aria-label="Create Campaign steps">
+          <li class="step step--done">
+            <span class="step__badge"><span class="icon icon--circle-check" aria-hidden="true"></span></span>
+            <span class="step__bar"></span>
+            <span class="step__label">General</span>
+          </li>
+          <li class="step step--current" aria-current="step">
+            <span class="step__badge">2</span>
+            <span class="step__bar"></span>
+            <span class="step__label">Campaign Settings</span>
+          </li>
+          <li class="step">
+            <span class="step__badge">3</span>
+            <span class="step__bar"></span>
+            <span class="step__label">Review</span>
+          </li>
+        </ol>
+
+        <!-- Cards and the footer sit 20 apart inside their own block. -->
+        <div class="wizard__body">
+
+          <!-- Settings that went stale while the draft sat; filled by
+               stale-check.js, which also decides whether an error belongs here
+               or on this step's own field. -->
+          <div data-role="stale-message" hidden></div>
+
+        <!-- Shown when Step 1 has no joining site yet: every block below is
+             scoped to those sites. -->
+        <div class="alert alert--warning alert--page" data-role="no-sites" hidden>
+          <span class="icon icon--triangle-alert" aria-hidden="true"></span>
+          <div class="alert__content">
+            <p class="alert__text">Select who joins the campaign in Step 1 first. Matches and the sites' user groups depend on them.
+              <a class="link-button" href="create-bonus.html">Go to Step 1</a></p>
+          </div>
+        </div>
+
+        <!-- ================= Calculation Scope ================= -->
+        <section class="card" aria-labelledby="scope-title">
+          <div class="card__intro">
+            <h2 class="card__title" id="scope-title">Calculation Scope<span class="field__required" aria-hidden="true">*</span></h2>
+            <p class="field__description">Which matches the net loss is counted on, and when it is calculated and paid.</p>
+          </div>
+
+          <div class="field" data-field="scope-mode">
+            <div class="radio-group" role="radiogroup" aria-labelledby="scope-title">
+              <label class="radio-field">
+                <input type="radio" class="radio" name="scope-mode" value="match" />
+                <span class="radio-field__body">
+                  <span class="radio-field__title">By Match</span>
+                  <span class="radio-field__hint">One match. Calculated and paid once that match is officially settled.</span>
+                </span>
+              </label>
+              <label class="radio-field">
+                <input type="radio" class="radio" name="scope-mode" value="period" />
+                <span class="radio-field__body">
+                  <span class="radio-field__title">By Period</span>
+                  <span class="radio-field__hint">Several matches across a period. The net loss is totalled over the period and paid once, after the period ends and all its matches are settled.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="cs-period" data-role="period-fields" hidden>
+            <div class="field" data-field="period-start">
+              <label class="field__label" for="period-start-date">Period Start<span class="field__required" aria-hidden="true">*</span></label>
+              <div class="datetime">
+                <div class="control">
+                  <input id="period-start-date" type="text" placeholder="Select date" data-role="date" />
+                  <span class="icon icon--calendar" aria-hidden="true"></span>
+                </div>
+                <div class="datetime__half">
+                  <div class="control control--time">
+                    <input id="period-start-time" type="text" placeholder="--:--" maxlength="5" data-role="time" />
+                  </div>
+                  <span class="datetime__zone">(GMT-4)</span>
+                </div>
+              </div>
+            </div>
+            <div class="field" data-field="period-end">
+              <label class="field__label" for="period-end-date">Period End<span class="field__required" aria-hidden="true">*</span></label>
+              <div class="datetime">
+                <div class="control">
+                  <input id="period-end-date" type="text" placeholder="Select date" data-role="date" />
+                  <span class="icon icon--calendar" aria-hidden="true"></span>
+                </div>
+                <div class="datetime__half">
+                  <div class="control control--time">
+                    <input id="period-end-time" type="text" placeholder="--:--" maxlength="5" data-role="time" />
+                  </div>
+                  <span class="datetime__zone">(GMT-4)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field" data-field="matches">
+            <div class="cs-head">
+              <div class="card__intro">
+                <span class="field__label" data-role="matches-label">Match<span class="field__required" aria-hidden="true">*</span></span>
+                <p class="field__description" data-role="matches-hint"></p>
+              </div>
+              <button type="button" class="button button--secondary button--small" data-role="open-matches">
+                <span class="icon icon--plus" aria-hidden="true"></span>
+                <span data-role="open-matches-label">Select Match</span>
+              </button>
+            </div>
+            <div class="cs-table cs-table--matches" data-role="match-table" hidden>
+              <div class="cs-table__head">
+                <span>Kick-off (GMT-4)</span>
+                <span data-col="sport">Sport</span>
+                <span data-col="league">League</span>
+                <span>Match</span>
+                <span></span>
+              </div>
+              <div class="cs-table__body" data-role="match-rows"></div>
+            </div>
+            <div class="cs-empty cs-empty--compact" data-role="match-empty">
+              <p class="cs-empty__title" data-role="match-empty-text">No match selected yet.</p>
+            </div>
+          </div>
+
+          <div class="cs-callout" data-role="scope-timing"></div>
+        </section>
+
+        <!-- ================= Free Bet Calculation ================= -->
+        <section class="card" aria-labelledby="rule-title">
+          <div class="card__intro">
+            <h2 class="card__title" id="rule-title">Free Bet Calculation<span class="field__required" aria-hidden="true">*</span></h2>
+            <p class="field__description">How much free bet a player gets back once their net loss reaches the minimum.</p>
+          </div>
+
+          <div class="field" data-field="calc-mode">
+            <div class="radio-group" role="radiogroup" aria-labelledby="rule-title">
+              <label class="radio-field">
+                <input type="radio" class="radio" name="calc-mode" value="percent" />
+                <span class="radio-field__body">
+                  <span class="radio-field__title">Rebate Percentage</span>
+                  <span class="radio-field__hint">A percentage of the net loss, up to a cap.</span>
+                </span>
+              </label>
+              <label class="radio-field">
+                <input type="radio" class="radio" name="calc-mode" value="amount" />
+                <span class="radio-field__body">
+                  <span class="radio-field__title">Rebate Absolute Amount</span>
+                  <span class="radio-field__hint">A fixed free bet, the same whatever the net loss is.</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="cs-formula" data-role="formula"></div>
+
+          <div class="field" data-field="rebate-pct" data-role="pct-field">
+            <label class="field__label" for="rebate-pct">Rebate Percentage<span class="field__required" aria-hidden="true">*</span></label>
+            <div class="control control--pct">
+              <input id="rebate-pct" type="text" inputmode="decimal" placeholder="e.g. 10" />
+              <span class="control__suffix">%</span>
+            </div>
+            <p class="field__message">Above 0 and up to 100, up to 2 decimal places.</p>
+          </div>
+
+          <div class="field" data-field="amounts">
+            <div class="cs-head">
+              <div class="card__intro">
+                <span class="field__label" data-role="amounts-label">Min. Net Loss and Max Free Bet by Currency<span class="field__required" aria-hidden="true">*</span></span>
+                <p class="field__description" data-role="amounts-hint"></p>
+              </div>
+              <button type="button" class="button button--outline button--small" data-role="fill-from-usd">Fill from USD</button>
+            </div>
+            <div class="cs-table cs-table--amounts">
+              <div class="cs-table__head">
+                <span>Currency</span>
+                <span>Min. Net Loss</span>
+                <span data-role="amount-head">Max Free Bet</span>
+                <span>≈ USD (reference)</span>
+              </div>
+              <div class="cs-table__body" data-role="amount-rows"></div>
+            </div>
+            <p class="field__description" data-role="rate-note"></p>
+          </div>
+
+          <div class="cs-sim">
+            <p class="cs-sim__title">Try an example</p>
+            <div class="cs-sim__inputs">
+              <div class="select-native">
+                <select class="select" data-role="sim-currency" aria-label="Example currency"></select>
+                <span class="icon icon--chevron-down select-native__chevron" aria-hidden="true"></span>
+              </div>
+              <div class="control">
+                <input type="text" inputmode="numeric" placeholder="Total valid stake" data-role="sim-stake" aria-label="Total valid stake" />
+              </div>
+              <div class="control">
+                <input type="text" inputmode="numeric" placeholder="Total payout" data-role="sim-payout" aria-label="Total payout" />
+              </div>
+            </div>
+            <p class="cs-sim__result" data-role="sim-result">Enter a stake and a payout to see the result.</p>
+          </div>
+        </section>
+
+        <!-- ================= Free Bet Setup ================= -->
+        <section class="card" aria-labelledby="fb-title">
+          <div class="card__intro">
+            <h2 class="card__title" id="fb-title">Free Bet Setup</h2>
+            <p class="field__description">Where and when the free bet paid by this campaign can be used.</p>
+          </div>
+
+          <div class="field" data-field="fb-scope">
+            <span class="field__label">Applicable Scope<span class="field__required" aria-hidden="true">*</span></span>
+            <div class="radio-group" role="radiogroup" aria-label="Applicable Scope">
+              <label class="radio-field">
+                <input type="radio" class="radio" name="fb-scope" value="all" />
+                <span class="radio-field__body">
+                  <span class="radio-field__title">All</span>
+                  <span class="radio-field__hint">Any sport, league and bet type.</span>
+                </span>
+              </label>
+              <label class="radio-field">
+                <input type="radio" class="radio" name="fb-scope" value="specific" />
+                <span class="radio-field__body">
+                  <span class="radio-field__title">By Sport, League and Bet Type</span>
+                  <span class="radio-field__hint">Only the combinations added below.</span>
+                </span>
+              </label>
+            </div>
+            <div class="cs-sports" data-role="fb-sports-wrap" hidden>
+              <div class="cs-table cs-table--sports" data-role="fb-sport-table" hidden>
+                <div class="cs-table__head">
+                  <span>Sport</span>
+                  <span>League</span>
+                  <span>Bet Type</span>
+                  <span></span>
+                </div>
+                <div class="cs-table__body" data-role="fb-sport-rows"></div>
+              </div>
+              <button type="button" class="button button--secondary button--small" data-role="add-sport">
+                <span class="icon icon--plus" aria-hidden="true"></span>
+                Add Sport
+              </button>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field" data-field="min-odds">
+              <label class="field__label" for="min-odds">Min Odds<span class="field__required" aria-hidden="true">*</span></label>
+              <div class="control">
+                <input id="min-odds" type="text" inputmode="decimal" />
+                <span class="control__suffix">(DEC)</span>
+              </div>
+              <p class="field__message">1.01 or higher, up to 2 decimal places.</p>
+            </div>
+            <div class="field" data-field="max-odds">
+              <label class="field__label" for="max-odds">Max Odds<span class="field__required" aria-hidden="true">*</span></label>
+              <div class="control">
+                <input id="max-odds" type="text" inputmode="decimal" />
+                <span class="control__suffix">(DEC)</span>
+              </div>
+              <label class="checkbox-field" for="max-odds-no-limit">
+                <input type="checkbox" class="checkbox" id="max-odds-no-limit" />
+                <span>No limit</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field" data-field="fb-start">
+            <label class="field__label" for="fb-start-date">Valid From<span class="field__required" aria-hidden="true">*</span></label>
+            <div class="datetime">
+              <div class="control">
+                <input id="fb-start-date" type="text" placeholder="Select date" data-role="date" />
+                <span class="icon icon--calendar" aria-hidden="true"></span>
+              </div>
+              <div class="datetime__half">
+                <div class="control control--time">
+                  <input id="fb-start-time" type="text" placeholder="--:--" maxlength="5" data-role="time" />
+                </div>
+                <span class="datetime__zone">(GMT-4)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field" data-field="fb-end">
+            <label class="field__label" for="fb-end-date">Valid Until<span class="field__required" aria-hidden="true">*</span></label>
+            <div class="datetime">
+              <div class="control">
+                <input id="fb-end-date" type="text" placeholder="Select date" data-role="date" />
+                <span class="icon icon--calendar" aria-hidden="true"></span>
+              </div>
+              <div class="datetime__half">
+                <div class="control control--time">
+                  <input id="fb-end-time" type="text" placeholder="--:--" maxlength="5" data-role="time" />
+                </div>
+                <span class="datetime__zone">(GMT-4)</span>
+              </div>
+            </div>
+            <p class="field__message" data-role="fb-end-hint"></p>
+          </div>
+        </section>
+
+        <div class="wizard__footer">
+          <a class="button button--outline" href="create-bonus.html">Back</a>
+          <div class="wizard__actions">
+            <button type="button" class="button button--outline" data-role="save-draft">Save Draft</button>
+            <button type="button" class="button button--primary" data-role="next">Next</button>
+          </div>
+        </div>
+        </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Select Match(es) -->
+<div class="backdrop" data-role="match-dialog" hidden>
+  <div class="dialog cs-dialog cs-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="match-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="match-title">Select Match</h2>
+      <button type="button" class="dialog__close" data-role="close-match" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="dialog__body cs-dialog__body">
+      <p class="field__description" data-role="match-dialog-hint"></p>
+      <div class="cs-filters">
+        <div class="segmented" role="group" aria-label="Sport">
+          <button type="button" class="segmented__item segmented__item--active" data-sport="all">All</button>
+          <button type="button" class="segmented__item" data-sport="Soccer">Soccer</button>
+          <button type="button" class="segmented__item" data-sport="Basketball">Basketball</button>
+        </div>
+        <div class="input cs-filters__search">
+          <span class="icon icon--search" aria-hidden="true"></span>
+          <input type="text" placeholder="Search team or league" data-role="match-search" />
+        </div>
+      </div>
+      <div class="cs-table cs-table--pick">
+        <div class="cs-table__head">
+          <span></span>
+          <span>Kick-off (GMT-4)</span>
+          <span>League</span>
+          <span>Match</span>
+        </div>
+        <div class="cs-table__body cs-table__body--scroll" data-role="match-options"></div>
+      </div>
+      <p class="field__description" data-role="match-hidden-note"></p>
+    </div>
+    <div class="dialog__footer">
+      <div class="dialog__footer-lead">
+        <span class="selected-count"><strong data-role="match-count">0</strong> selected</span>
+      </div>
+      <button type="button" class="button button--outline" data-role="cancel-match">Cancel</button>
+      <button type="button" class="button button--primary" data-role="confirm-match">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- Free Bet scope: Add Sport -->
+<div class="backdrop" data-role="sport-dialog" hidden>
+  <div class="dialog cs-dialog" role="dialog" aria-modal="true" aria-labelledby="sport-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="sport-title">Add Sport</h2>
+      <button type="button" class="dialog__close" data-role="close-sport" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="dialog__body cs-dialog__body">
+      <div class="field">
+        <label class="field__label" for="sport-select">Sport<span class="field__required" aria-hidden="true">*</span></label>
+        <div class="select-native cs-select-full">
+          <select id="sport-select" class="select" data-role="sport-select"></select>
+          <span class="icon icon--chevron-down select-native__chevron" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field__label">League<span class="field__required" aria-hidden="true">*</span></span>
+        <div class="cs-checks" data-role="league-options"></div>
+      </div>
+      <div class="field">
+        <span class="field__label">Bet Type<span class="field__required" aria-hidden="true">*</span></span>
+        <div class="cs-checks" data-role="bettype-options"></div>
+      </div>
+    </div>
+    <div class="dialog__footer dialog__footer--end">
+      <button type="button" class="button button--outline" data-role="cancel-sport">Cancel</button>
+      <button type="button" class="button button--primary" data-role="save-sport" disabled>Add</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" data-role="toasts"></div>
+
+<div class="backdrop" data-role="leave-dialog" hidden>
+  <div class="dialog dialog--alert" role="alertdialog" aria-modal="true" aria-labelledby="leave-title" aria-describedby="leave-text">
+    <div class="dialog__body alert-dialog__body">
+      <span class="alert-dialog__mark alert-dialog__mark--warning" aria-hidden="true">
+        <span class="icon icon--triangle-alert"></span>
+      </span>
+      <h2 class="alert-dialog__title" id="leave-title">Leave this page?</h2>
+      <p class="alert-dialog__text" id="leave-text">Your unsaved changes will be lost.</p>
+    </div>
+    <div class="dialog__footer alert-dialog__footer">
+      <button type="button" class="button button--outline" data-role="keep-editing">Keep Editing</button>
+      <button type="button" class="button button--destructive-soft" data-role="leave">Leave</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/role.js"></script>
+<script src="js/wizard-state.js"></script>
+<script src="js/campaign-data.js"></script>
+<script src="js/datetime-picker.js"></script>
+<script src="js/stale-check.js"></script>
+<script src="js/create-bonus-step2.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/steps.js"></script>
+<script src="js/leave-dialog.js"></script>
+</body>
+</html>

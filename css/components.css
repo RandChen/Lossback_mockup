@@ -1,0 +1,360 @@
+/* Storybook chrome only. Every specimen on the page is rendered by the product's
+   own stylesheets — nothing here restyles a component, it only lays the page out
+   and labels what is on it. */
+
+.story-intro {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--spacing-3xl);
+  align-items: start;
+}
+
+/* ---------- In-page nav ---------------------------------------------------- */
+.story-nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.story-nav__title {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.story-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+}
+
+.story-nav__link {
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-radius: var(--radius-md);
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.story-nav__link:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+.story-nav__link--active {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-weight: 500;
+}
+
+/* ---------- Sections ------------------------------------------------------- */
+.story-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+  min-width: 0;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  scroll-margin-top: var(--spacing-lg);
+}
+
+.story__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border);
+}
+
+.story__title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+}
+
+.story__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  margin-left: auto;
+}
+
+.story__code {
+  padding: 2px var(--spacing-2xs);
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  color: var(--foreground);
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.story__figma {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.story__note,
+.story__used {
+  max-width: 72ch;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.story__used-label {
+  margin-right: var(--spacing-2xs);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.story__group {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Specimens ------------------------------------------------------ */
+.story__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.specimen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+/* The checkerboard keeps a white component readable on a white page without
+   tinting it, which a grey panel would. */
+.specimen__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: 72px;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+}
+
+.specimen__label {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+
+/* Tooltips are hover-only, so the specimens pin theirs open — otherwise the
+   page would show three empty boxes. */
+.story-tip .tooltip {
+  opacity: 1;
+}
+
+.story-tip {
+  display: inline-flex;
+}
+
+/* A pinned tooltip is wider than its trigger, so these specimens need the room
+   or the labels sit on top of the next one along. */
+#tooltip .specimen__preview {
+  min-width: 280px;
+  padding-top: var(--spacing-3xl);
+}
+
+/* ---------- Property table ------------------------------------------------- */
+/* Straight from the Figma component set, so it states what the design system
+   declares rather than what this project happens to use. */
+.prop-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.prop-row {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.prop-row + .prop-row {
+  border-top: 1px solid var(--border);
+}
+
+.prop-row__name {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+.prop-row__values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs);
+}
+
+.prop-value {
+  padding: 1px var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.prop-value--type {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--muted-foreground);
+}
+
+/* ---------- Matrix ---------------------------------------------------------- */
+.matrix {
+  display: grid;
+  grid-template-columns: 136px repeat(calc(var(--matrix-cols) - 1), minmax(120px, 1fr));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.matrix__corner,
+.matrix__col-head,
+.matrix__row-head {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.matrix__col-head,
+.matrix__corner {
+  border-bottom: 1px solid var(--border);
+}
+
+.matrix__row-head {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.matrix__corner + .matrix__col-head ~ .matrix__col-head,
+.matrix__col-head {
+  border-left: 1px solid var(--border);
+}
+
+.matrix__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3xs);
+  min-height: 72px;
+  padding: var(--spacing-sm);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.matrix__specimen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.matrix__live {
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 14px;
+}
+
+/* A state the design system has and this project has not drawn yet. Saying so
+   is the point — a blank cell would read as "nothing to see". */
+.matrix__cell--gap,
+.specimen__preview--gap {
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 5px,
+    color-mix(in srgb, var(--border) 45%, transparent) 5px,
+    color-mix(in srgb, var(--border) 45%, transparent) 10px);
+}
+
+.specimen__gap {
+  padding: 1px var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.specimen__hint {
+  color: var(--muted-foreground);
+}
+
+/* ---------- Icons ---------------------------------------------------------- */
+.story__icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: var(--spacing-xs);
+}
+
+.icon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-2xs);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.icon-cell .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-cell__name {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 14px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .story-layout { grid-template-columns: minmax(0, 1fr); }
+  .story-nav { position: static; }
+}

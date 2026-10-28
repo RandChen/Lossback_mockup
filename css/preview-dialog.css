@@ -1,0 +1,48 @@
+/* Preview Player View — the dialog that shows what the player sees.
+
+   Shared by Step 4 of the wizard and the Bonus Detail page: the UX puts the
+   same "Preview Player View" button on the approval view, so the dialog is
+   extracted rather than written twice.
+
+   The player-facing screens themselves are not specified here. They belong to
+   the player app's own design file, and the UI design drops a 360x640 mock of
+   them into the dialog body, so this page shows that mock as an indication
+   rather than rebuilding the screens. */
+
+
+/* ---------- Preview dialog ------------------------------------------------ */
+.dialog--preview {
+  /* Dialog - Nova at 640x770: the header plus 16 / tabs 44 / mock 640 / 16.
+     The height is left to the content so the mock is never clipped; a short
+     viewport scrolls the body instead. */
+  width: 640px;
+  max-height: 100%;
+}
+
+/* The tabs are Button - Nova instances, so they carry .button and only need
+   placing here: 16 under the header, 12 above the mock. */
+.preview__tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex: none;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
+}
+
+.preview__body {
+  display: flex;
+  justify-content: center;
+  padding-top: 0;
+}
+
+/* The player-view mock, at the size the design places it at. */
+.phone {
+  display: block;
+  flex: none;
+  width: 360px;
+  height: 640px;
+}
+
+.phone[hidden] {
+  display: none;
+}

@@ -1,0 +1,204 @@
+/* Single date + time picker for the wizard's schedule fields.
+
+   The month grid comes from calendar.css (Calendar - Nova). The kit has no
+   Time Picker component, so the time side is the confirmed
+   "Select & Combobox - Nova" pattern: a trigger plus a list of options. */
+
+/* The UX splits this row into two equal halves, the right one holding the time
+   input and its timezone. The frame's own gap is 14px, which the token file
+   lists only as an out-of-scale one-off, so the row uses the spacing scale. */
+.datetime {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.datetime > .datetime__field,
+.datetime__half {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.datetime__half {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+.datetime__half .datetime__field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.datetime .control {
+  width: auto;
+  flex: 1 1 0;
+  min-width: 0;
+  height: auto;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.control--time {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+.datetime .icon {
+  color: var(--muted-foreground);
+}
+
+.datetime__zone {
+  flex: none;
+  color: var(--muted-foreground);
+}
+
+/* The row stacks rather than squeezing once the two halves get too narrow. */
+@media (max-width: 720px) {
+  .datetime {
+    flex-wrap: wrap;
+  }
+}
+
+.datetime .control input {
+  cursor: pointer;
+}
+
+.datetime__field {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* The time field fills its half of the row rather than sitting at a fixed
+   width; the half itself is what the layout sizes. */
+.datetime__field--time {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+.datetime__panel {
+  position: absolute;
+  top: calc(100% + var(--spacing-2xs));
+  left: 0;
+  z-index: 40;
+  padding: var(--spacing-md);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.datetime__panel[hidden] {
+  display: none;
+}
+
+.datetime__panel--time {
+  min-width: 160px;
+  right: 0;
+  left: auto;
+  padding: var(--spacing-xs);
+}
+
+/* ---------- Time list ----------------------------------------------------- */
+/* Hour and Minute are equal halves of the panel, as the design lays them out
+   (two columns at grow 1 with a hairline between). */
+.time-grid {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-3xs);
+}
+
+.time-col {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.time-col__head {
+  margin: 0;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.time-col--divider {
+  flex: 0 0 auto;
+}
+
+.time-grid__colon {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+}
+
+.time-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  width: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  /* The scrollbar's track is transparent so the column does not read as a
+     second block inside the panel; only the thumb shows. */
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+
+.time-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.time-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.time-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+.time-list__option {
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.time-list__option:hover {
+  background: var(--accent);
+}
+
+.time-list__option--selected {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-weight: 500;
+}
+
+/* ---------- Single month calendar ----------------------------------------- */
+.datetime__panel .calendar__caption {
+  flex: 1 1 auto;
+}
+
+.datetime__panel .calendar__months {
+  justify-content: center;
+}
+
+/* Dates and times outside the allowed range stay visible but unselectable. */
+.day--disabled,
+.time-list__option--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

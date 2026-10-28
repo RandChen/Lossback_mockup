@@ -1,0 +1,2775 @@
+/* Light palette only — the design is signed off in light and must not follow
+   the OS appearance. This governs the parts the browser draws itself: form
+   controls, scrollbars, autofill and the initial canvas.
+
+   `only` opts out of the UA's automatic dark treatment outright, and the
+   `!important` is what makes it stick when the page is embedded: a host that
+   follows the OS theme (the Artifact viewer does) writes `color-scheme: dark`
+   as an inline style on <html>, which otherwise outranks any normal rule here.
+
+   tokens.css carries a `.dark` block from the token export; nothing applies it. */
+:root {
+  color-scheme: only light !important;
+
+  /* Used by the destructive toast and by the alert block; the token export
+     carries the fill but not this border. */
+  --alert-destructive-border: var(--theme-destructive-400);
+
+  /* The Label component's required asterisk is a bare #ff0101 bound to no
+     variable, and it is not the destructive red. Named here because every page
+     with a form needs it. */
+  --required: #ff0101; /* Figma style: Color/Red */
+}
+
+/* Inherited, so this reaches every scroller on the page. */
+:root {
+  scrollbar-color: var(--border) var(--muted);
+}
+
+/* Autofill is painted by the browser, so it needs its colours named outright
+   rather than inherited. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--foreground);
+  -webkit-box-shadow: inset 0 0 0 1000px var(--background);
+  caret-color: var(--foreground);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Any component rule that sets `display` outranks the browser's own
+   `[hidden] { display: none }`, which silently leaves hidden elements on
+   screen. This settles it once instead of per component. */
+[hidden] {
+  display: none !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+/* The shell fills the viewport and the content area does the scrolling, so the
+   sidebar and top bar stay put. */
+.app {
+  display: flex;
+  height: 100%;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.app__content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.area {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* ---------- Icons -------------------------------------------------------- */
+/* Every glyph is a real exported vector, tinted through a mask so its colour
+   comes from a token rather than from the file. */
+.icon {
+  display: inline-block;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.icon--brand { -webkit-mask-image: url("../icons/brand-component.svg"); mask-image: url("../icons/brand-component.svg"); width: 24px; height: 24px; }
+.icon--gift { -webkit-mask-image: url("../icons/gift.svg"); mask-image: url("../icons/gift.svg"); }
+.icon--circle-check { -webkit-mask-image: url("../icons/circle-check.svg"); mask-image: url("../icons/circle-check.svg"); }
+.icon--file-check { -webkit-mask-image: url("../icons/file-check.svg"); mask-image: url("../icons/file-check.svg"); }
+.icon--x { -webkit-mask-image: url("../icons/x.svg"); mask-image: url("../icons/x.svg"); }
+.icon--move-right { -webkit-mask-image: url("../icons/move-right.svg"); mask-image: url("../icons/move-right.svg"); }
+.icon--circle-alert { -webkit-mask-image: url("../icons/circle-alert.svg"); mask-image: url("../icons/circle-alert.svg"); }
+.icon--triangle-alert { -webkit-mask-image: url("../icons/triangle-alert.svg"); mask-image: url("../icons/triangle-alert.svg"); }
+.icon--target { -webkit-mask-image: url("../icons/target.svg"); mask-image: url("../icons/target.svg"); }
+.icon--inbox { -webkit-mask-image: url("../icons/inbox.svg"); mask-image: url("../icons/inbox.svg"); }
+.icon--chevron-down { -webkit-mask-image: url("../icons/chevron-down-figma.svg"); mask-image: url("../icons/chevron-down-figma.svg"); }
+.icon--clock { -webkit-mask-image: url("../icons/clock.svg"); mask-image: url("../icons/clock.svg"); width: 18px; height: 18px; }
+.icon--user { -webkit-mask-image: url("../icons/circle-user-round.svg"); mask-image: url("../icons/circle-user-round.svg"); }
+.icon--bell { -webkit-mask-image: url("../icons/bell.svg"); mask-image: url("../icons/bell.svg"); }
+.icon--help { -webkit-mask-image: url("../icons/circle-question-mark.svg"); mask-image: url("../icons/circle-question-mark.svg"); }
+.icon--plus { -webkit-mask-image: url("../icons/plus.svg"); mask-image: url("../icons/plus.svg"); }
+.icon--ellipsis { -webkit-mask-image: url("../icons/ellipsis.svg"); mask-image: url("../icons/ellipsis.svg"); }
+.icon--search { -webkit-mask-image: url("../icons/search.svg"); mask-image: url("../icons/search.svg"); }
+.icon--calendar { -webkit-mask-image: url("../icons/calendar.svg"); mask-image: url("../icons/calendar.svg"); }
+.icon--arrow-right { -webkit-mask-image: url("../icons/arrow-right.svg"); mask-image: url("../icons/arrow-right.svg"); }
+.icon--reset { -webkit-mask-image: url("../icons/rotate-cw.svg"); mask-image: url("../icons/rotate-cw.svg"); }
+.icon--chevron-left { -webkit-mask-image: url("../icons/chevron-left.svg"); mask-image: url("../icons/chevron-left.svg"); }
+.icon--chevron-right { -webkit-mask-image: url("../icons/chevron-right.svg"); mask-image: url("../icons/chevron-right.svg"); }
+.icon--file-symlink { -webkit-mask-image: url("../icons/file-symlink.svg"); mask-image: url("../icons/file-symlink.svg"); }
+.icon--download { -webkit-mask-image: url("../icons/download.svg"); mask-image: url("../icons/download.svg"); }
+
+.icon--trash { -webkit-mask-image: url("../icons/trash.svg"); mask-image: url("../icons/trash.svg"); }
+.icon--nav-left { -webkit-mask-image: url("../icons/arrow-left.svg"); mask-image: url("../icons/arrow-left.svg"); }
+.icon--nav-right { -webkit-mask-image: url("../icons/arrow-right.svg"); mask-image: url("../icons/arrow-right.svg"); }
+
+/* ---------- Sidebar ------------------------------------------------------ */
+.sidebar {
+  flex: none;
+  width: 256px;
+  padding: 0 var(--spacing-md);
+  background: var(--sidebar);
+  color: var(--sidebar-foreground);
+}
+
+/* The trigger and the scrim only exist below the desktop breakpoint. The
+   compound selector outranks the generic .icon-button display. */
+.icon-button.sidebar-trigger {
+  display: none;
+  margin-right: auto;
+}
+
+.sidebar-scrim {
+  display: none;
+}
+
+.icon--panel-left { -webkit-mask-image: url("../icons/panel-left.svg"); mask-image: url("../icons/panel-left.svg"); }
+
+.sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  height: 60px;
+  padding: 0 var(--spacing-xs);
+  color: var(--foreground);
+}
+
+.sidebar__brand-name {
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 600;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 208px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+  height: 32px;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--sidebar-foreground);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: var(--sidebar-accent-sub);
+}
+
+.nav-item--active {
+  background: var(--sidebar-accent);
+}
+
+.nav-item__label {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* blue-link / link-button — the kit's text action. Lives here because the
+   notification panel's "Mark all as read" needs it on every page. */
+.link-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--bluelink);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link-button--destructive {
+  color: var(--state-destructive-foreground);
+}
+
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px var(--spacing-xs);
+  border-radius: var(--radius-lg);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.nav-sub {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-sub-item {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  color: var(--sidebar-foreground);
+  text-decoration: none;
+}
+
+/* The 1px rule that threads the child items back up to their parent. */
+.nav-sub-item__leaf {
+  position: relative;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+
+.nav-sub-item__leaf::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 1px;
+  height: 32px;
+  background: var(--sidebar-border);
+}
+
+.nav-sub-item__label {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--spacing-2xs);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-sub-item:hover .nav-sub-item__label {
+  background: var(--sidebar-accent-sub);
+}
+
+.nav-sub-item--active .nav-sub-item__label {
+  font-weight: 600;
+}
+
+/* ---------- Top bar ------------------------------------------------------ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  height: 60px;
+  flex: none;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar__time {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  color: var(--info);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* ---------- Scope switcher (Oneworks top bar) ------------------------------ */
+/* The operator scope the Oneworks build is looking at. The UX draws it in its
+   own wireframe greys (UX 5673:84525), so the colours here are the nearest
+   tokens: an underlined 28-high control, the label muted and the value in the
+   foreground. Not a kit component — see the Missing Component note in the log. */
+.scope-switcher {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex: none;
+}
+
+.scope-switcher[hidden] {
+  display: none;
+}
+
+/* The control is now a real picker (UX 5507:36258), so the box that used to be
+   the whole thing is the trigger and the .scope-select around it only anchors
+   the panel. */
+.scope-select {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.scope-select__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  height: 28px;
+  white-space: nowrap;
+  padding: 0 var(--spacing-2xs);
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+/* A Licensee cannot move between sites, so the Site reads as plain text. */
+.scope-select--static .scope-select__trigger {
+  border-bottom-color: transparent;
+  cursor: default;
+}
+
+.scope-select--static .scope-select__icon {
+  display: none;
+}
+
+.scope-select__panel {
+  position: absolute;
+  top: calc(100% + var(--spacing-2xs));
+  left: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  width: 240px;
+  padding: var(--spacing-3xs);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.scope-select__panel[hidden] {
+  display: none;
+}
+
+.scope-select__search {
+  margin-bottom: var(--spacing-3xs);
+}
+
+.scope-select__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+/* Same Dropdown Menu Item as everywhere else, in its single-select form. */
+.scope-select__option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+  min-height: 24px;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border: 0;
+  background: none;
+  border-radius: var(--radius-md);
+  color: inherit;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.scope-select__option:hover {
+  background: var(--accent);
+}
+
+.scope-select__check {
+  visibility: hidden;
+}
+
+.scope-select__option[aria-selected="true"] {
+  font-weight: 500;
+}
+
+.scope-select__option[aria-selected="true"] .scope-select__check {
+  visibility: visible;
+}
+
+/* The pinned option is ruled off from the rest (UX 5507:36258). */
+.scope-select__separator {
+  height: 1px;
+  margin: var(--spacing-3xs) 0;
+  background: var(--border);
+}
+
+.scope-select__empty {
+  margin: 0;
+  padding: var(--spacing-xs);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.scope-select__label {
+  color: var(--muted-foreground);
+}
+
+.scope-select__value {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.scope-select__icon {
+  width: 16px;
+  height: 16px;
+  color: var(--muted-foreground);
+}
+
+/* No subsidiaries to pick, so the whole control reads as unavailable. */
+.scope-select--disabled .scope-select__trigger {
+  border-bottom-color: color-mix(in srgb, var(--border) 60%, transparent);
+  cursor: not-allowed;
+}
+
+.scope-select--disabled .scope-select__label,
+.scope-select--disabled .scope-select__value,
+.scope-select--disabled .scope-select__icon {
+  color: var(--muted-foreground);
+  opacity: 0.6;
+}
+
+.topbar__divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.notification__badge {
+  position: absolute;
+  top: 0;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  min-height: 16px;
+  /* The badge frame is 16 tall while its label is the 12/16 text the design
+     specifies, so the padding is horizontal only. */
+  padding: 0 var(--spacing-2xs);
+  border-radius: var(--radius-full);
+  background: var(--destructive);
+  color: var(--background);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 6px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+/* Project usage: both pagers draw this at 28 with radius 10, which is not one
+   of the component's sizes (Small is 28 with radius 8). It is kept as the
+   product drew it; the component's own scale is the --size-* set below. */
+.icon-button--outline {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+}
+
+/* Icon Button - Nova, the rest of the component.
+
+   Variant: the five fills the set declares. Ghost is the base above.
+   Size:    Default 32/8/10, Large 36/10/10, Small 28/6/8, Extra small 22/5/8.
+   State:   Focus and Invalid mirror Button - Nova's rings; Disabled dims. */
+.icon-button--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.icon-button--secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.icon-button--primary:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--theme-neutrals-1000) 8%, var(--primary));
+}
+
+.icon-button--secondary:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--theme-neutrals-1000) 8%, var(--secondary));
+}
+
+.icon-button--size-default {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-lg);
+}
+
+.icon-button--lg {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 10px;
+  border-radius: var(--radius-lg);
+}
+
+.icon-button--sm {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 6px;
+  border-radius: var(--radius-md);
+}
+
+.icon-button--xs {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  padding: 5px;
+  border-radius: var(--radius-md);
+}
+
+.icon-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+.icon-button--destructive {
+  color: var(--state-destructive-foreground);
+}
+
+.icon-button--destructive:hover:not([disabled]) {
+  background: var(--state-destructive);
+}
+
+.icon-button--destructive:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.icon-button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.icon-button:hover:not([disabled]) {
+  background: var(--accent);
+}
+
+.icon-button--invalid {
+  border: 1px solid var(--destructive);
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  align-self: flex-start;
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--foreground);
+}
+
+/* ---------- Page head ---------------------------------------------------- */
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.page-head__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.breadcrumb {
+  color: var(--info);
+  font-size: 13px;
+  line-height: 20.5px;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+}
+
+.page-head__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.page-head__heading h1 {
+  font-size: 22px;
+  line-height: 26.4px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.marker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--muted-foreground);
+}
+
+.marker__link {
+  border-bottom: 1px solid var(--muted-foreground);
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Buttons ------------------------------------------------------ */
+.button {
+  /* Button - Nova at Size=Default: 32 tall, 6/10 inset, 6 gap, radius 10,
+     14/20 Medium — the same geometry for every variant. The 6/10/6 values are
+     the component's own, not spacing tokens. The stroke sits inside, so a
+     bordered button must not grow past an unbordered one. */
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.button--primary:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--theme-neutrals-1000) 8%, var(--primary));
+}
+
+/* Button - Nova's Secondary variant differs from the others only in colour;
+   the size comes from .button / .button--small like every other variant. */
+.button--secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+.button--secondary:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--theme-neutrals-1000) 4%, var(--secondary));
+}
+
+.button--outline {
+  background: var(--alpha-white-outline-bg);
+  border: 1px solid var(--border);
+}
+
+.button--outline:hover:not([disabled]) {
+  background: var(--accent);
+}
+
+.button--ghost:hover:not([disabled]) {
+  background: var(--accent);
+}
+
+/* The alert dialog's destructive confirm is a tinted brick with a red label,
+   not the solid destructive button. */
+/* Button - Nova, Destructive variant. A button variant, so it sits with the
+   others: the Reject dialog on the Bonus Detail page uses it as well. */
+.button--destructive {
+  background: var(--destructive);
+  color: var(--background);
+}
+
+.button--destructive-soft {
+  background: var(--state-destructive);
+  color: var(--state-destructive-foreground);
+}
+
+.button--destructive-soft:hover:not([disabled]) {
+  background: color-mix(in srgb, var(--destructive) 20%, transparent);
+}
+
+/* Recall Bonus on Distribution Records is an Outline button with a red label
+   (UX 4887:128747). The kit has no outline-destructive variant, so it is
+   composed from Outline plus the state token rather than invented. */
+.button--destructive-text {
+  color: var(--state-destructive-foreground);
+}
+
+/* ---------- Empty states ---------------------------------------------------- */
+.table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-2xl);
+  text-align: center;
+}
+
+.table-empty__art {
+  display: block;
+  width: 180px;
+  height: 180px;
+}
+
+.table-empty__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  width: 100%;
+}
+
+.table-empty[hidden] {
+  display: none;
+}
+
+.table-empty__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.table-empty__hint {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* The notification panel is 370 wide, so it takes the art at half scale. */
+.table-empty--sm {
+  padding: var(--spacing-xl);
+}
+
+.table-empty--sm .table-empty__art {
+  width: 90px;
+  height: 90px;
+}
+
+/* Dropdown anchored under its trigger. Promoted out of the wizard: the
+   Distribution Records page uses it for Batch Action and the More menu. */
+.batch-action {
+  position: relative;
+}
+
+.batch-action__menu {
+  position: absolute;
+  top: calc(100% + var(--spacing-2xs));
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  padding: var(--spacing-3xs);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.batch-action__menu[hidden] {
+  display: none;
+}
+
+.batch-action__item {
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.batch-action__item:hover {
+  background: var(--accent);
+}
+
+.batch-action__item--destructive {
+  color: var(--destructive);
+}
+
+/* ---------- Card - Nova and the value primitives -------------------------- */
+/* One copy each: these were duplicated byte-for-byte across detail.css and
+   the wizard's sheets. */
+/* ---------- Cards -------------------------------------------------------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+
+
+.card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.card__title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+
+.currency {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 2px var(--spacing-2xs);
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.denomination {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  flex-wrap: wrap;
+}
+
+/* ---------- Multi-select filter ------------------------------------------ */
+/* The panel floats under its trigger — promoted out of the bonus list, which
+   is no longer the only page with one. */
+.filter-select {
+  position: relative;
+}
+
+.filter-select__panel {
+  position: absolute;
+  top: calc(100% + var(--spacing-2xs));
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-3xs);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.filter-select__panel[hidden] {
+  display: none;
+}
+
+/* Dropdown Menu Item - Nova: 24 tall, 4/8 inset, 8 gap, radius 8, 12px label. */
+/* The Site filter searches its own options (UX 5673:85715). */
+.filter-select__search {
+  margin-bottom: var(--spacing-3xs);
+}
+
+/* One row, two forms: a <label> carrying a 16 checkbox (multi-select) or a
+   <button> carrying a 16 check mark (single-select). Same metrics either way,
+   so the button has to give up the browser's own chrome. */
+.filter-select__option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+  min-height: 24px;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border: 0;
+  background: none;
+  border-radius: var(--radius-md);
+  color: inherit;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.filter-select__option:hover {
+  background: var(--accent);
+}
+
+/* Same component as .menu__item, in the filter dropdowns' checkbox form. */
+.filter-select__option:focus-within {
+  background: var(--accent);
+}
+
+.filter-select__option--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* The single-select form's left decoration. It keeps its 16 whether or not the
+   row is the chosen one, so every label in the panel starts at the same x. */
+.filter-select__check {
+  visibility: hidden;
+}
+
+.filter-select__option[aria-selected="true"] {
+  font-weight: 500;
+}
+
+.filter-select__option[aria-selected="true"] .filter-select__check {
+  visibility: visible;
+}
+
+/* Status Filter (4171:50293): the sub-states sit in a `sub` container indented
+   12 — no rule, no tint, the indent is the whole of the hierarchy. */
+.filter-select__sub {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  padding-left: var(--spacing-sm);
+}
+
+.filter-select__option input {
+  /* The kit's left decoration is a 16 checkbox. The browser's own
+     `margin: 3px 3px 3px 4px` on a checkbox would make the row 28 instead of 24
+     and widen the 8 gap to 12, so it has to go (same trap as N-17's <dl>). */
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex: none;
+  accent-color: var(--primary);
+}
+
+/* Dropdown Menu - Nova, as the kit draws it for a filter (4171:50293): a
+   Separator, then a 28 row carrying the count and a Ghost Small Clear. */
+.filter-select__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+  height: 28px;
+  margin-top: var(--spacing-2xs);
+  padding: 0 var(--spacing-xs);
+  border-top: 1px solid var(--border);
+}
+
+.filter-select__count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--spacing-2xs);
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+/* The number is read first, so it keeps the body size while its label drops. */
+.filter-select__count b {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.filter-select__count span {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* The Clear in this footer overrides two of Button - Nova Small's own values:
+   the wider 4/16 inset instead of 4/10, and radius 10 instead of 8 — both as the
+   kit draws the instance (4171:50705). */
+.filter-select__footer .button {
+  padding: var(--spacing-2xs) var(--spacing-md);
+  border-radius: var(--radius-lg);
+}
+
+.select__tags {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Two status tags show in full; the rest collapse into +{x}. Each visible tag
+   can be removed without opening the panel. */
+.select__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-3xs);
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.select__tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.select__tag-remove:hover {
+  background: var(--alpha-black-switch-alpha-10);
+}
+
+.select__tag-remove .icon {
+  width: 10px;
+  height: 10px;
+}
+
+.select__overflow {
+  flex: none;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+/* Reset stays disabled until a filter is set. */
+.filter-card__reset[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.filter-card__reset[disabled]:hover {
+  background: transparent;
+}
+
+/* ---------- Alert - Nova -------------------------------------------------- */
+/* 1953:32858. Four types, one geometry: 8/12 inset, 16 gap, radius 10, a 1px
+   border in the state colour and a 16 icon. The title is 14/20 SemiBold in the
+   state colour, the description 14/20 Regular in that state's heavy shade.
+   Neutral is the odd one out — card background, plain border, foreground title
+   and a muted description. */
+/* The stroke is inside, as the component has it (1953:32858): an inset shadow
+   rather than a border, so the 1px sits within the 8/12 inset instead of adding
+   2px to the height. A 400x36 Alert in Figma is 36 here too. */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+/* The 16 icon centres on the first 20px line. */
+.alert .icon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--foreground);
+}
+
+.alert__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  min-width: 0;
+}
+
+.alert__title {
+  margin: 0;
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.alert__text {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* The alert's optional action is Button - Nova Outline at Extra small, filled
+   with 30% white so the alert's own tint shows through instead of a solid
+   white patch. */
+.alert .button--outline {
+  background: var(--alpha-white-switch-alpha-30);
+}
+
+.alert--destructive {
+  background: var(--state-destructive-soft);
+  box-shadow: inset 0 0 0 1px var(--state-destructive-foreground);
+}
+
+/* The component splits these two: the icon is bound to
+   state/destructive-foreground, the title to general/destructive. Same hex,
+   different jobs — the other three variants use one token for both. */
+.alert--destructive .icon {
+  color: var(--state-destructive-foreground);
+}
+
+.alert--destructive .alert__title {
+  color: var(--destructive);
+}
+
+.alert--destructive .alert__text {
+  color: var(--state-destructive-heavy);
+}
+
+.alert--success {
+  background: var(--state-success-soft);
+  box-shadow: inset 0 0 0 1px var(--state-success-foreground);
+}
+
+.alert--success .icon,
+.alert--success .alert__title {
+  color: var(--state-success-foreground);
+}
+
+.alert--success .alert__text {
+  color: var(--state-success-heavy);
+}
+
+.alert--warning {
+  background: var(--state-warning-soft);
+  box-shadow: inset 0 0 0 1px var(--state-warning-foreground);
+}
+
+.alert--warning .icon,
+.alert--warning .alert__title {
+  color: var(--state-warning-foreground);
+}
+
+.alert--warning .alert__text {
+  color: var(--state-warning-heavy);
+}
+
+/* While a Retry or Recall runs, the bar drops to the component's Neutral
+   variant and reports progress instead of a failure: the icon becomes a
+   spinner and the CTA goes away entirely, since there is nothing to press
+   until the run ends (UX 5789:47959, badged 10/16). */
+.alert--progress {
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.alert--progress .alert__title {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* Three weights on one line: the action word keeps the title's own weight and
+   the counter is muted, the words around it are not. */
+.alert__title > strong {
+  font-weight: 600;
+}
+
+.alert__count {
+  color: var(--muted-foreground);
+}
+
+/* The Button spinner, sized to the Alert's 16 icon slot. */
+.alert__spinner {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border: 2px solid var(--muted-foreground);
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: button-spin 0.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alert__spinner { animation: none; }
+}
+
+/* The page banner is the same Alert, just full width — the component's own
+   8/12 inset applies, so it only drops whatever margin its host would give it.
+   Its action sits at the far right of the bar rather than beside the text, so
+   it lands under the card's own buttons below it. */
+.alert--page {
+  margin: 0;
+}
+
+.alert--page > .button {
+  margin-left: auto;
+}
+
+/* ---------- Steps ---------------------------------------------------------- */
+/* Promoted out of create-bonus.css 2026-10-12: the four wizard pages all use
+   it, and the Storybook needs it from the shared layer. */
+/* ---------- Step indicator ----------------------------------------------- */
+.steps {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+/* The design dropped the step's minimum width, so the four columns stay on one
+   row at any width and simply compress. */
+.step {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-width: 1px;
+}
+
+
+/* Completed steps are navigable; the overlay link keeps the column layout
+   (badge, bar, label) exactly as the design draws it. */
+.step--jumpable {
+  position: relative;
+}
+
+
+.step__jump {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+
+.step__jump:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+
+.step--jumpable:hover .step__label {
+  text-decoration: underline;
+}
+
+
+.step__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: var(--sidebar-accent);
+  color: var(--sidebar-foreground);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+
+/* Each segment is inset by 2px, so neighbouring steps read as separate bars. */
+.step__bar {
+  width: 100%;
+  height: 6px;
+  padding: 0 var(--spacing-3xs);
+  background: var(--secondary);
+  background-clip: content-box;
+}
+
+
+.step--done .step__badge {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+
+/* The finish badge is a 30 circle holding the 28 circle-check glyph. */
+.step--done .step__badge .icon {
+  width: 28px;
+  height: 28px;
+}
+
+
+.step--done .step__bar {
+  background: var(--primary);
+}
+
+
+
+.step__label {
+  width: 100%;
+  color: var(--sidebar-foreground);
+  font-weight: 600;
+  text-align: center;
+}
+
+
+.step--current .step__badge {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+
+.step--current .step__bar {
+  background: var(--primary);
+}
+
+/* ---------- Checkbox - Nova ---------------------------------------------- */
+/* 16 box with a radius-4 face: unchecked is a 1px --input outline, checked and
+   indeterminate fill with --primary and carry a white glyph. Disabled dims the
+   whole control to 50% rather than changing its colours. */
+.checkbox {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  appearance: none;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkbox:checked,
+.checkbox:indeterminate {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkbox:checked::after,
+.checkbox:indeterminate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--primary-foreground);
+  -webkit-mask: url("../icons/check.svg") center / 14px 14px no-repeat;
+  mask: url("../icons/check.svg") center / 14px 14px no-repeat;
+}
+
+.checkbox:indeterminate::after {
+  -webkit-mask-image: url("../icons/minus.svg");
+  mask-image: url("../icons/minus.svg");
+}
+
+.checkbox:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Checkbox - Nova, State=Error Focus. */
+.field--invalid .checkbox:focus-visible,
+.checkbox--error:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.checkbox--error {
+  border-color: var(--destructive);
+}
+
+.checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* A label with a Checkbox - Nova beside it. Promoted out of
+   create-bonus-step2.css 2026-10-12 so the Storybook can show it too; the
+   control itself is .checkbox above, this is only the row that holds it. */
+.checkbox-field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+}
+
+/* ---------- Dropdown Menu Item - Nova ------------------------------------- */
+/* Promoted out of bonus-list.css 2026-10-12: the row-actions menu and the
+   filter dropdowns are the same component, so it belongs in the shared layer. */
+/* Fixed rather than absolute: the table scrolls horizontally on narrow
+   screens, and an absolutely positioned menu would be clipped by it. */
+.menu {
+  position: fixed;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  width: 164px;
+  padding: var(--spacing-3xs);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.menu[hidden] {
+  display: none;
+}
+.menu__section {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--spacing-3xs);
+}
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.menu__item:hover {
+  background: var(--accent);
+}
+.menu__item--destructive {
+  color: var(--destructive);
+}
+.menu__decoration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  padding: var(--spacing-3xs);
+}
+.menu__separator {
+  height: 8px;
+  position: relative;
+}
+.menu__separator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+/* The component's remaining Types and States. Hover and Active share a fill;
+   Focus adds the ring; Disabled dims. Destructive keeps its text colour and
+   takes the soft tint behind it so the label stays readable. */
+.menu__item:focus-visible {
+  outline: none;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.menu__item--active,
+.menu__item:active {
+  background: var(--accent);
+}
+
+.menu__item--accent {
+  background: var(--accent);
+}
+
+.menu__item[disabled],
+.menu__item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu__item--destructive:focus-visible {
+  background: var(--state-destructive);
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+/* Card - Nova, Show footer. The product has no card with one yet, but the
+   component declares it. */
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Marker Default - Nova ------------------------------------------ */
+/* A 16 icon beside a 14 muted label. The variants differ only in what sits
+   around that pair: Button adds a trailing chevron, Link makes the label a
+   link, Spinner swaps the icon for a spinner, Vertical stacks them.
+   .back-link is this product's Horizontal usage. */
+.marker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.marker .icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.marker--button {
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.marker--link .marker__label {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.marker--vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-2xs);
+}
+
+.marker--spinner .marker__spinner {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: button-spin 0.6s linear infinite;
+}
+
+.marker:hover {
+  color: var(--foreground);
+}
+
+.marker:focus-visible {
+  outline: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+/* ---------- Radio - Nova --------------------------------------------------- */
+/* 16 circle with the same 1px --input outline the checkbox uses; checked fills
+   with --primary and carries a 6 dot. Disabled dims to 50% — the component has
+   0.3 on the checked variant and 0.5 on the unchecked one, which is an upstream
+   inconsistency, so the checkbox's 0.5 is used for both. */
+.radio {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  appearance: none;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.radio:checked {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius-full);
+  background: var(--primary-foreground);
+}
+
+.radio:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.field--invalid .radio:focus-visible,
+.radio--error:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.radio--error {
+  border-color: var(--destructive);
+}
+
+.radio:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* The label wrapping a Radio - Nova and its two lines of copy. Named -field so
+   it cannot collide with the .radio control itself, the same split the checkbox
+   needed on 2026-10-02. Promoted out of create-bonus-step2.css 2026-10-12 so
+   the Storybook can show it too. */
+.radio-field {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+}
+
+.radio-field .radio {
+  margin: 2px 0 0;
+}
+
+.radio-field__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+}
+
+.radio-field__title {
+  font-weight: 500;
+}
+
+.radio-field__hint {
+  color: var(--muted-foreground);
+}
+
+/* ---------- Tooltip - Nova ----------------------------------------------- */
+/* Black brick, radius 10, 6/8 inset, 12/16 Regular white label. Shown on hover
+   or focus of whatever carries .has-tooltip. */
+.has-tooltip {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + var(--spacing-2xs));
+  left: 50%;
+  z-index: 40;
+  transform: translateX(-50%);
+  padding: 6px var(--spacing-xs);
+  border-radius: var(--radius-lg);
+  background: var(--theme-neutrals-500);
+  color: var(--alpha-white-switch-alpha-100);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  /* Leaving hides it at once; the delay below only applies on the way in. */
+  transition: opacity 120ms ease;
+}
+
+/* "Hover 後，停留 2~3s 才會顯示 tooltip" is written as a common display rule
+   (UX 5141:32933), so it sits on the shared component, not on one page. Focus
+   still shows it immediately — a keyboard user has already committed. */
+.has-tooltip:hover > .tooltip {
+  opacity: 1;
+  transition-delay: 2s;
+}
+
+.has-tooltip:focus-within > .tooltip {
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+/* Centred on a trigger that sits at the left edge of its container, a tooltip
+   this wide hangs outside it — the checkbox column is 16 wide and the labels
+   run past 200. Anchoring the left edge to the trigger keeps it inside. */
+.tooltip--start {
+  left: 0;
+  transform: none;
+}
+
+/* The table clips its own overflow for the rounded corners, so a tooltip on the
+   header row has no room above it — that one drops below the trigger instead. */
+.tooltip--below {
+  top: calc(100% + var(--spacing-2xs));
+  bottom: auto;
+}
+
+/* Tooltip - Nova, the rest of the set.
+
+   Side: Top is the default above; Bottom is --below. Left and Right centre on
+   the trigger's own axis instead.
+   Type: Formatted carries a second line, Shortcut a kbd key beside the label. */
+.tooltip--left,
+.tooltip--right {
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+}
+
+.tooltip--left {
+  right: calc(100% + var(--spacing-2xs));
+  left: auto;
+}
+
+.tooltip--right {
+  left: calc(100% + var(--spacing-2xs));
+}
+
+.tooltip--formatted {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  white-space: normal;
+}
+
+.tooltip--formatted .tooltip__line2 {
+  color: var(--alpha-white-switch-alpha-70);
+}
+
+.tooltip--shortcut {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* kbd - Nova, the key cap the Shortcut tooltip carries. */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--spacing-3xs);
+  border-radius: var(--radius-sm);
+  background: var(--alpha-white-switch-alpha-20);
+  color: inherit;
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.icon--minus { -webkit-mask-image: url("../icons/minus.svg"); mask-image: url("../icons/minus.svg"); }
+.icon--brand-component { -webkit-mask-image: url("../icons/brand-component.svg"); mask-image: url("../icons/brand-component.svg"); }
+.icon--pencil { -webkit-mask-image: url("../icons/pencil.svg"); mask-image: url("../icons/pencil.svg"); }
+.icon--copy { -webkit-mask-image: url("../icons/copy.svg"); mask-image: url("../icons/copy.svg"); }
+.icon--eye { -webkit-mask-image: url("../icons/eye.svg"); mask-image: url("../icons/eye.svg"); }
+.icon--upload { -webkit-mask-image: url("../icons/upload.svg"); mask-image: url("../icons/upload.svg"); }
+.icon--user-plus { -webkit-mask-image: url("../icons/user-plus.svg"); mask-image: url("../icons/user-plus.svg"); }
+
+/* Button - Nova, Show spinner. */
+.button__spinner {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: button-spin 0.6s linear infinite;
+}
+
+@keyframes button-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button__spinner { animation: none; }
+}
+
+/* ---------- Button sizes ------------------------------------------------- */
+/* Size modifiers come after the variants so their inset wins. */
+
+/* Button - Nova at the Large size: 36 tall with the 8/10 inset and radius 10. */
+.button--lg {
+  height: 36px;
+  padding: var(--spacing-xs) 10px;
+  border-radius: var(--radius-lg);
+}
+
+/* Button - Nova at the Small size: 28 tall with the 4/10 inset, which is what
+   the UI file uses for Select Languages. */
+.button--small {
+  height: 28px;
+  padding: var(--spacing-2xs) 10px;
+  border-radius: var(--radius-md);
+}
+
+/* Button - Nova at the Extra small size: 22 tall, 3/8 inset, radius 8 and a
+   12/16 label. The notification panel's "Mark all as read" uses it. */
+.button--xs {
+  height: 22px;
+  padding: 3px var(--spacing-xs);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* A disabled button keeps its own colours and just dims; the hover rules are
+   scoped with :not([disabled]) so nothing repaints under the cursor. */
+.button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Button - Nova, State=Focus and State=Invalid.
+
+   Ring width follows the project's own convention — 3px, the same as the one
+   .control, .select and .date-trigger have always used — rather than the
+   component's shadow spread, which is 0 on five of the six variants and 2 on
+   Destructive. That inconsistency is an upstream oversight, not a spec. */
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+.button--destructive:focus-visible,
+.button--invalid:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.button--invalid {
+  border: 1px solid var(--destructive);
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+/* A run of characters a search matched. <mark> arrives with a yellow browser
+   default, so the background is cleared before the UX's emphasis is applied. */
+.search-hit {
+  background: none;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.icon--check { -webkit-mask-image: url("../icons/check.svg"); mask-image: url("../icons/check.svg"); }
+
+/* Vertical Field - Nova and Label. Form primitives, so they live here rather
+   than with the wizard: the Reject dialog on the Bonus Detail page uses them
+   too. The asterisk's red has no token in the kit — see --required. */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.field__label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3xs);
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.field__required {
+  color: var(--required);
+}
+
+/* Textarea - Nova. A form primitive, so it lives here rather than with the
+   wizard: the Reject dialog on the Bonus Detail page uses it too. */
+.textarea {
+  width: 100%;
+  height: 76px;
+  padding: 7px;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xs);
+  color: var(--foreground);
+  font: inherit;
+  resize: vertical;
+}
+
+/* ---------- Input - Nova: the control wrapper ---------------------------- */
+/* Promoted out of create-bonus.css 2026-10-12: the Storybook showed these are
+   the shared Input and Field parts, not page chrome. */
+
+
+
+
+
+.field__message {
+  max-width: 296px;
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* Vertical Field - Nova carries two bits of helper text and they behave
+   differently: the description sits under the label, above the control, and
+   stays put when the field goes invalid; the message sits under the control and
+   is the one the error replaces. */
+.field__description {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+
+/* ---------- Controls ----------------------------------------------------- */
+/* 32px tall overall, as the design draws it: 20px of text inside 1px borders. */
+.control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 10px;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+}
+
+
+.control input {
+  height: 20px;
+  line-height: 20px;
+}
+
+
+/* A short numeric field hugs its content instead of filling the card. */
+.control--hug {
+  width: auto;
+  align-self: flex-start;
+}
+
+
+/* A value the reader cannot change but still needs to see. (Licensee PT used
+   to use this; it is now Oneworks-only and the Licensee build drops the row
+   altogether rather than showing it greyed out — see detail.js.) */
+.control--readonly {
+  background: var(--alpha-black-switch-alpha-10);
+  opacity: 0.5;
+}
+
+
+.control input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+}
+
+
+.control--hug input {
+  flex: none;
+  width: 3ch;
+}
+
+
+.control__suffix {
+  color: var(--muted-foreground);
+}
+
+
+.control:focus-within {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+
+.control--readonly:focus-within {
+  box-shadow: none;
+}
+
+
+.control input::placeholder {
+  color: var(--muted-foreground);
+}
+
+
+/* ---------- Validation ---------------------------------------------------- */
+/* The error is an extra line, not a replacement: the updated Step 2 error mock
+   keeps "Minimum: 1.5" and puts "Min Odds cannot be lower than 1.5." under it
+   (4647:6894). A field with no message simply has the error in that slot. */
+.field__error {
+  margin: 0;
+  color: var(--destructive);
+}
+
+.field__error[hidden] {
+  display: none;
+}
+
+
+.field--invalid .control,
+.field--invalid .textarea {
+  border-color: var(--destructive);
+}
+
+
+.field--invalid .control:focus-within,
+.field--invalid .textarea:focus-visible {
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.textarea::placeholder {
+  color: var(--muted-foreground);
+}
+
+/* Textarea - Nova, the rest of the set. Empty, Placeholder and Value share the
+   chrome and differ only in what the box contains. Disabled dims to 0.3 — the
+   component's own figure, lower than the 0.5 the buttons and checkbox use. */
+.textarea--error {
+  border-color: var(--destructive);
+}
+
+.textarea--error:focus-visible {
+  border-color: var(--destructive);
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+.textarea[disabled],
+.textarea--disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.textarea:focus-visible {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+/* ---------- Tabs ---------------------------------------------------------- */
+/* An underlined tab row: the row carries the baseline, the active tab carries
+   the rule that sits on top of it. Shared by the Bonus Detail sections and the
+   Approval Inbox queues, so it works for both <a> and <button>. */
+.tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xl);
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* A short label such as "All" would otherwise leave a stub of an underline,
+     so the tab keeps a minimum width of its own. */
+  min-width: 46px;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) 0;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted-foreground);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--foreground);
+}
+
+.tab--active {
+  border-bottom-color: var(--primary);
+  color: var(--foreground);
+}
+
+/* A tab may carry an outstanding count, or — when there is only "something new
+   to see" to report — a dot at the top right of its own label. */
+.tab__label {
+  position: relative;
+}
+
+.tab__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--spacing-2xs);
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.tab--active .tab__count {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.tab__dot {
+  position: absolute;
+  top: -1px;
+  right: -9px;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--state-destructive-foreground);
+}
+
+.tab__dot[hidden] {
+  display: none;
+}
+
+/* ---------- Filter card -------------------------------------------------- */
+.filter-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* Scoped to the filter card: the form pages use their own `.field` layout. */
+.filter-card .field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 220px;
+  min-width: 220px;
+}
+
+/* All three fields share the row equally; the date one just refuses to shrink
+   below the width its two formatted dates need, and wraps instead. */
+.filter-card .field[data-date-range-picker] {
+  min-width: 240px;
+}
+
+.filter-card .field__label {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+/* The reset hugs its label: in a grid the trailing `auto` track soaks up
+   whatever the filters leave over, which stretched the button to 430 on the
+   two-filter Usage Report row. `flex: none` covers the flex case. */
+.filter-card__reset {
+  flex: none;
+  justify-self: start;
+  margin-bottom: 0;
+  color: var(--foreground);
+}
+
+.input,
+.select,
+.date-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  background: var(--background);
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.input {
+  cursor: text;
+  color: var(--muted-foreground);
+}
+
+.input input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+}
+
+.input input::placeholder,
+.select__placeholder {
+  color: var(--muted-foreground);
+}
+
+.select {
+  justify-content: space-between;
+  color: var(--muted-foreground);
+}
+
+/* Select & Combobox - Nova, native form. A <select> draws its own arrow with
+   the browser's metrics — too far in, the wrong size, and it ignores our
+   colour. The kit puts a 16 chevron 6 from the right edge with an 8 gap
+   (UI 5293:36162), so the browser's is switched off and the project's own icon
+   is laid over it. The right inset is 6, not the trigger's usual 10, because
+   the decoration is what the padding ends against. */
+.select-native {
+  position: relative;
+  display: inline-flex;
+}
+
+.select-native .select {
+  appearance: none;
+  -webkit-appearance: none;
+  /* 6 inset + 16 chevron + 8 gap */
+  padding-right: 30px;
+}
+
+.select-native__chevron {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.input:focus-within,
+.select:focus-visible,
+.date-trigger:focus-visible {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+/* Select & Combobox - Nova, the rest of the set.
+
+   State: Placeholder and Default share the chrome and differ only in the value's
+   colour; Error puts a destructive border on it; Error focus adds the error
+   ring; Disabled dims to 50% over a 10% black wash, as the readonly control does.
+   Size: Default 32/10, Large 36/10, Small 28/8, Extra small 22/8. */
+.select--error {
+  border-color: var(--destructive);
+}
+
+.select--error:focus-visible {
+  border-color: var(--destructive);
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+/* Input - Nova's own State=Disabled: 10% black over the field, the normal
+   border, the whole thing at half opacity. The filter row then reads as one
+   locked block while an action runs (UX 5789:47471). */
+.input:has(> input[disabled]) {
+  background: var(--alpha-black-switch-alpha-10);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input > input[disabled] {
+  cursor: not-allowed;
+}
+
+.select[disabled],
+.select--disabled {
+  background: var(--alpha-black-switch-alpha-10);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.select--lg {
+  height: 36px;
+  padding: var(--spacing-xs) var(--spacing-xs) var(--spacing-xs) 10px;
+  border-radius: var(--radius-lg);
+}
+
+.select--sm {
+  height: 28px;
+  padding: var(--spacing-2xs) var(--spacing-xs) var(--spacing-2xs) 10px;
+  border-radius: var(--radius-md);
+}
+
+.select--xs {
+  height: 22px;
+  padding: var(--spacing-3xs) 6px var(--spacing-3xs) var(--spacing-xs);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- Table -------------------------------------------------------- */
+.table {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.table__row:last-child {
+  border-bottom: 0;
+}
+
+/* The table's horizontal scrollbar uses the same treatment as the vertical one
+   in the time picker: a 6px thumb in the border colour on a transparent track,
+   so the bar reads as part of the component rather than as the OS chrome. */
+.table {
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+
+.table::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.table::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+.table__head,
+.table__row {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) minmax(0, 0.75fr) minmax(0, 0.75fr) minmax(0, 0.5fr)
+    minmax(0, 0.5fr) minmax(0, 0.75fr) minmax(0, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+
+.table__th {
+  padding: var(--spacing-sm);
+  background: var(--table-title);
+  color: var(--secondary-foreground);
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 500;
+}
+
+.table__cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-2xs);
+  min-height: 64px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  overflow: hidden;
+}
+
+.table__row:hover {
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+}
+
+.cell-link {
+  color: var(--secondary-foreground);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.cell-link--mini {
+  padding: 3px 0;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* The reason link sits under a status tag in a narrow column and stays on one
+   line, unlike the report links, which are allowed to wrap. */
+.tag + .cell-link--mini {
+  white-space: nowrap;
+}
+
+.cell-id {
+  color: var(--info);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cell-date {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cell-sub {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cell-text {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.cell-empty {
+  color: var(--info);
+  font-size: 12px;
+}
+
+/* ---------- Report page layout ---------------------------------------------- */
+/* Shared by the two per-promotion report pages (Distribution Records, Usage
+   Report). It sits after the card, table, filter-card and pagination sections
+   on purpose: several of these rules are overrides of those components, and at
+   equal specificity the later rule is the one that wins. */
+
+/* The UX column is 1010 wide — wider than the detail page's reading column,
+   because these pages carry a wide table. */
+.records__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 1010px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* A tab that has no screen behind it yet still reads as unavailable. */
+.tabs .tab[aria-disabled="true"] {
+  color: var(--muted-foreground);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.records__actions,
+.records__list-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.records__date {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* The record card: tighter than a plain .card, with the action beside the title
+   rather than stacked under it. */
+.records__list {
+  gap: var(--spacing-md);
+  /* Stacking context for a page-level overlay (e.g. Usage Report's Converting). */
+  position: relative;
+}
+
+.records__list-head {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+/* The column track is the only part each report page decides for itself, so it
+   comes in as a variable instead of the page restating this whole rule. */
+.records__filters {
+  display: grid;
+  align-items: end;
+  gap: var(--spacing-sm);
+  grid-template-columns: var(--filter-cols, minmax(0, 1fr));
+}
+
+.records__filters .field {
+  min-width: 0;
+}
+
+/* Row per page sits next to the count, not adrift in the middle: only the
+   pagination is pushed to the far right (UX pager band). */
+.records__per-page {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.records__per-page .field__label {
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.records__per-page-select {
+  width: auto;
+  min-width: 80px;
+}
+
+.records__list .pager {
+  flex-wrap: wrap;
+}
+
+/* ---------- Tag ---------------------------------------------------------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px var(--spacing-xs);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tag--normal { background: var(--state-normal); color: var(--state-normal-foreground); }
+.tag--warning { background: var(--state-warning); color: var(--state-warning-foreground); }
+.tag--destructive { background: var(--state-destructive); color: var(--state-destructive-foreground); }
+.tag--success { background: var(--state-success); color: var(--state-success-foreground); }
+
+/* ---------- Row actions -------------------------------------------------- */
+.button-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.button-group__button {
+  box-sizing: border-box;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 28px;
+  padding: var(--spacing-2xs) 10px;
+  background: var(--alpha-white-outline-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  color: var(--foreground);
+  font: inherit;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.button-group__button--only {
+  border-radius: var(--radius-md);
+}
+
+.button-group__button:hover,
+.button-group__icon:hover {
+  background: var(--accent);
+}
+
+.button-group__icon {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  padding: 6px;
+  background: var(--alpha-white-outline-bg);
+  border: 1px solid var(--border);
+  border-left: 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+/* ---------- Pagination --------------------------------------------------- */
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.pager > .pagination {
+  margin-left: auto;
+}
+
+.pager__count {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 17px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.pagination__page {
+  box-sizing: border-box;
+  min-width: 32px;
+  height: 32px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.pagination__page:hover {
+  background: var(--accent);
+}
+
+.pagination__page--current {
+  border-color: var(--border);
+  background: var(--alpha-white-switch-alpha-30);
+}
+
+
+/* Previous / Next are Ghost text buttons in the component, not icon buttons,
+   so they only need the shared .button geometry. */
+.pagination .button {
+  flex: none;
+}
+
+/* The ellipsis is an Icon Button - Nova carrying the ellipsis glyph, 32 square
+   with the same radius as the number buttons (1957:49237). */
+.pagination__gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+}
+
+/* Below the design's desktop width the seven columns stop being legible, so the
+   table scrolls on its own rather than squeezing or breaking the page. */
+@media (max-width: 1100px) {
+  .table {
+    overflow-x: auto;
+  }
+
+  .table__head,
+  .table__row {
+    min-width: 900px;
+  }
+}
+
+/* Below the desktop breakpoint the same sidebar becomes an overlay drawer:
+   off-canvas by default, slid in by the top bar trigger. */
+@media (max-width: 960px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 120;
+    overflow-y: auto;
+    border-right: 1px solid var(--sidebar-border);
+    transform: translateX(-100%);
+    transition: transform 150ms ease-out;
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .icon-button.sidebar-trigger {
+    display: inline-flex;
+  }
+
+  .sidebar-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: color-mix(in srgb, var(--theme-neutrals-1000) 40%, transparent);
+  }
+
+  .sidebar-scrim[hidden] {
+    display: none;
+  }
+
+  .area {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .page-head {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}

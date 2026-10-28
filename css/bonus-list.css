@@ -1,0 +1,21 @@
+/* Bonus Management list interactions: row menu, status filter, toasts,
+   confirmation dialogs and empty states. Table and filter chrome live in
+   app.css; this file only adds what those states need. */
+
+
+/* ---------- Row actions --------------------------------------------------- */
+.row-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+

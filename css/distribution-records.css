@@ -1,0 +1,169 @@
+/* Distribution Records — the per-promotion record list, its batch actions and
+   the Activity Log that records them.
+
+   Everything structural comes from app.css (table, filter-card, pager, tabs,
+   checkbox, tooltip, batch-action) and the dialog/activity-log sheets. Only the
+   page's own composition is described here. */
+
+/* ---------- Header ------------------------------------------------------- */
+/* The column, the date line, the action rows and the disabled-tab rule moved to
+   app.css on 2026-10-13: the Usage Report page is built on the same shell. */
+
+/* ---------- Summary ------------------------------------------------------ */
+/* One band of equal cells. Recalled only joins once a recall has succeeded, so
+   the cells share the row rather than sitting on a fixed grid. */
+/* Four separate tiles rather than one card with rules between the columns:
+   the UX draws each figure in its own bordered box (UX 4606:33052 "Summary"). */
+.summary {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-md);
+}
+
+.summary__item {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--spacing-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.summary__label {
+  margin: 0 0 var(--spacing-2xs);
+  color: var(--muted-foreground);
+}
+
+.summary__value {
+  margin: 0;
+  font-size: 22px;
+  line-height: 26.4px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+/* The two counts that carry meaning read in their state colour. */
+.summary__value--success { color: var(--state-success-foreground); }
+.summary__value--failed { color: var(--state-destructive-foreground); }
+
+/* ---------- Record list -------------------------------------------------- */
+/* The UX filter row at the 1010 column: a 280 search, three 200 selects and the
+   reset. Below that the columns shrink in proportion rather than overflowing,
+   and a long label wraps instead of running into its neighbour. The rest of the
+   card composition is in app.css, shared with Usage Report. */
+.dr-filters {
+  --filter-cols: minmax(160px, 280px) repeat(3, minmax(110px, 200px)) auto;
+}
+
+/* ---------- Table -------------------------------------------------------- */
+.records-table .table__head,
+.records-table .table__row {
+  grid-template-columns:
+    44px minmax(0, 1.4fr) minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1.1fr) minmax(0, 0.8fr) minmax(0, 1fr);
+}
+
+/* The Oneworks build adds Site Name in front of the member (UX 5673:84525);
+   the other columns give up a little width rather than the table scrolling. */
+.records-table--oneworks .table__head,
+.records-table--oneworks .table__row {
+  grid-template-columns:
+    44px minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1.1fr) minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 0.7fr) minmax(0, 0.9fr);
+}
+
+/* Six filters instead of five once Site Name joins them. */
+.dr-filters:has([data-role="site-filter"]:not([hidden])) {
+  --filter-cols: minmax(176px, 250px) repeat(4, minmax(96px, 170px)) auto;
+}
+
+/* An em dash stands in for a value the row does not have, in the same muted
+   grey the ID columns use (4606:35426). */
+.records-table .cell--none {
+  color: var(--muted-foreground);
+}
+
+.records-table__check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 0;
+}
+
+.records-table .table__cell.records-table__check {
+  align-items: center;
+  /* .table__cell clips its overflow so long values cannot spill between
+     columns. This column holds a 16 checkbox and nothing else, but it does
+     carry the disabled-reason tooltip — which that clip cuts down to a 44 wide
+     sliver. Nothing here needs clipping, so it is let through. */
+  overflow: visible;
+}
+
+/* A row whose record is no longer actionable still reads normally — only the
+   checkbox dims, which is what says "nothing to do here". */
+.records-table .table__row--selected {
+  background: var(--accent);
+}
+
+/* ---------- Pager -------------------------------------------------------- */
+.dialog--activity-log .dialog__body {
+  padding: 0;
+}
+
+@media (max-width: 1100px) {
+  .dr-filters {
+    --filter-cols: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .dr-filters .filter-card__reset {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 860px) {
+  .summary {
+    flex-wrap: wrap;
+  }
+
+  .summary__item {
+    flex-basis: 40%;
+  }
+
+  .summary__item + .summary__item {
+    padding-left: 0;
+    border-left: 0;
+  }
+}
+
+/* ---------- Selected bar -------------------------------------------------- */
+/* Appears as soon as a record is ticked (UX 4606:34709). Clear selection drops
+   the row and the ticks together. */
+/* Count on the left, Clear selection pushed to the far right, both in
+   Paragraph Mini (UX 4606:35356). It sits between the filter card and the
+   table, so it is bordered and rounded like they are rather than bleeding
+   across the card as a full-width strip. */
+.selected-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.selected-bar[hidden] {
+  display: none;
+}
+
+/* One colour for the whole line, number included — the <strong> is there for
+   the count's meaning, not for a second weight. */
+.selected-bar__count {
+  margin: 0;
+  color: var(--foreground);
+}
+
+.selected-bar__count strong {
+  font-weight: inherit;
+}

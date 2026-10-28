@@ -1,0 +1,33 @@
+/* Create Bonus — Step 4 (Review). The read-only rows reuse the Bonus Detail
+   list styles; only the preview dialog is new here. */
+
+
+/* The design puts Preview Player View on its own row under the step indicator,
+   flush with the right edge of the review cards. */
+.wizard__toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ---------- Review spacing ------------------------------------------------ */
+/* Taken from the Overview card's auto-layout: 20 between blocks, 20 between
+   rows, 16 between a sub-heading and its rows (the frame's 14 and 18 are not on
+   the spacing scale, so each snaps to the nearest step). */
+[data-review] .list-area {
+  gap: var(--spacing-xl);
+}
+
+/* Same rhythm as Bonus Detail: the two pages render the same Overview card,
+   and the UI file measures its stack at 24. */
+[data-review="usage"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* One sport's three rows, 12 apart — the same as Bonus Detail. */
+[data-review] .list-area--tight {
+  gap: var(--spacing-sm);
+}
+
+

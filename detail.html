@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bonus Detail — Free Bet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/detail.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/activity-log.css" />
+<link rel="stylesheet" href="css/preview-dialog.css" />
+<link rel="stylesheet" href="css/toast.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <button type="button" class="nav-item nav-item--active" aria-expanded="true">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="nav-sub">
+          <a class="nav-sub-item nav-sub-item--active" href="index.html" aria-current="page">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Free Bet</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">99</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="detail">
+
+        <!-- The back link, the tabs and the rule run the full content width;
+             only the title and the cards sit in the 750 column. -->
+        <div class="detail__top">
+          <a class="back-link" href="index.html" data-role="back-link">
+            <span class="icon icon--chevron-left" aria-hidden="true"></span>
+            <span data-role="back-label">Free Bet</span>
+          </a>
+
+          <nav class="tabs" aria-label="Bonus sections">
+            <a class="tab tab--active" href="#" aria-current="page"><span class="tab__label">Overview</span></a>
+            <a class="tab" href="distribution-records.html" data-role="tab-extra" hidden><span class="tab__label">Distribution Records</span></a>
+            <a class="tab" href="usage-report.html" data-role="tab-extra" hidden><span class="tab__label">Usage Report</span></a>
+          </nav>
+        </div>
+
+        <div class="detail__column">
+        <div class="detail__head">
+          <h1>EPL Free Bet Bonus</h1>
+          <button type="button" class="button button--outline" data-role="open-activity-log">Activity Log</button>
+          <a class="button button--primary" href="create-bonus.html" data-role="edit" hidden>Edit</a>
+          <button type="button" class="button button--outline" data-role="open-preview" hidden>
+            <span class="icon icon--eye" aria-hidden="true"></span>
+            Preview Player View
+          </button>
+        </div>
+
+        <p class="detail__submitted" data-role="submitted-meta" hidden></p>
+
+        <!-- Shown while the promotion sits in Rejected; it clears once the
+             promotion is submitted again. -->
+        <div class="alert alert--destructive alert--page" data-role="reject-banner" hidden>
+          <span class="icon icon--circle-alert" data-role="banner-icon" aria-hidden="true"></span>
+          <div class="alert__content">
+            <p class="alert__title" data-role="banner-title">Rejected</p>
+            <p class="alert__text" data-role="reject-reason"></p>
+          </div>
+        </div>
+
+        <section class="card card--review" aria-labelledby="card-general">
+          <h2 class="card__title" id="card-general">General</h2>
+          <div class="list-area">
+            <div class="list">
+              <p class="list__label">Bonus Promotion Name</p>
+              <div class="list__value">
+                <p>EPL Free Bet Bonus</p>
+              </div>
+            </div>
+            <div class="list">
+              <p class="list__label">Bonus Display Name</p>
+              <div class="list__value">
+                <p>English: Summer EPL Bonus</p>
+                <p>Chinese (Simplified): 夏日英超奖励</p>
+              </div>
+            </div>
+            <div class="list" data-role="licensee-pt" hidden>
+              <p class="list__label">Licensee PT</p>
+              <div class="list__value">
+                <p>100%</p>
+              </div>
+            </div>
+            <div class="list">
+              <p class="list__label">Bonus Promotion Note</p>
+              <div class="list__value" data-value="note" data-optional="true">
+                <p class="note">To boost new customer acquisition in line with the Premier League promotion.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card card--review" aria-labelledby="card-usage">
+          <div class="card__head">
+            <h2 class="card__title" id="card-usage">Usage &amp; Schedule</h2>
+            <h3 class="card__subtitle">Sports Conditions</h3>
+          </div>
+
+          <div class="sport-groups" data-role="sports">
+            <div class="list-area list-area--tight">
+              <div class="list">
+                <p class="list__label">Sport 1</p>
+                <div class="list__value"><p>Soccer</p></div>
+              </div>
+              <div class="list">
+                <p class="list__label">League</p>
+                <div class="list__value"><p>English Premier League, Spanish La Liga</p></div>
+              </div>
+              <div class="list">
+                <p class="list__label">Bet Type</p>
+                <div class="list__value"><p>Handicap, Over/Under</p></div>
+              </div>
+              <hr class="separator" />
+            </div>
+            <div class="list-area list-area--tight">
+              <div class="list">
+                <p class="list__label">Sport 2</p>
+                <div class="list__value"><p>Basketball</p></div>
+              </div>
+              <div class="list">
+                <p class="list__label">League</p>
+                <div class="list__value"><p>NBA, Euro League, CBA</p></div>
+              </div>
+              <div class="list">
+                <p class="list__label">Bet Type</p>
+                <div class="list__value"><p>Moneyline</p></div>
+              </div>
+              <hr class="separator" />
+            </div>
+            <div class="list-area list-area--tight">
+              <div class="list">
+                <p class="list__label">Sport 3</p>
+                <div class="list__value"><p>Tennis</p></div>
+              </div>
+              <div class="list">
+                <p class="list__label">League</p>
+                <div class="list__value"><p>All leagues</p></div>
+              </div>
+              <div class="list">
+                <p class="list__label">Bet Type</p>
+                <div class="list__value"><p>All bet types</p></div>
+              </div>
+              <hr class="separator" />
+            </div>
+          </div>
+
+          <h3 class="card__subtitle">Odds Range</h3>
+          <div class="list-area">
+            <div class="list">
+              <p class="list__label">Min Odds</p>
+              <div class="list__value"><p>1.5<span class="unit">(DEC)</span></p></div>
+            </div>
+            <div class="list">
+              <p class="list__label">Max Odds</p>
+              <div class="list__value"><p>No limit</p></div>
+            </div>
+          </div>
+
+          <h3 class="card__subtitle">Distribution Schedule</h3>
+          <div class="list-area">
+            <div class="list">
+              <p class="list__label">Distribution Date</p>
+              <div class="list__value" data-value="distribution-date"><p>2026/07/16 10:00 (GMT-4)</p></div>
+            </div>
+          </div>
+
+          <h3 class="card__subtitle">Validity Period</h3>
+          <div class="list-area">
+            <div class="list">
+              <p class="list__label">Effective Date</p>
+              <div class="list__value" data-value="effective-date"><p>2026/08/16 10:00 (GMT-4)</p></div>
+            </div>
+            <div class="list">
+              <p class="list__label">Expiry Date</p>
+              <div class="list__value" data-value="expiry-date"><p>2026/09/16 10:00 (GMT-4)</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card card--review" aria-labelledby="card-recipients">
+          <h2 class="card__title" id="card-recipients">Recipients</h2>
+          <div class="list-area">
+            <div class="list">
+              <p class="list__label">Total Recipients</p>
+              <div class="list__value" data-value="total-recipients"><p>1,000</p></div>
+            </div>
+            <div class="list">
+              <p class="list__label">Total Quantity</p>
+              <div class="list__value" data-value="total-quantity"><p>1,000</p></div>
+            </div>
+            <div class="list">
+              <p class="list__label">Total Denomination</p>
+              <div class="list__value" data-value="total-denomination">
+                <p class="denomination">
+                  <span class="currency">USD</span>
+                  <span>5</span><span>x</span><span>100</span><span>=</span><span>500</span>
+                </p>
+                <p class="denomination">
+                  <span class="currency">IDR</span>
+                  <span>10</span><span>x</span><span>200</span><span>=</span><span>2,000</span>
+                </p>
+              </div>
+            </div>
+            <div class="list">
+              <p class="list__label">Recipients List</p>
+              <div class="list__value" data-value="recipients-list">
+                <a class="blue-link" href="#">EPL_Free_Bet_Bonus_recipients_list.csv</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="detail__footer" data-role="submit-row" hidden>
+          <button type="button" class="button button--primary" data-role="submit">Submit for Approval</button>
+        </div>
+
+        <!-- Reject stays available even once the promotion has expired: the UX
+             says rejecting is how an expired submission leaves Pending Review. -->
+        <div class="detail__footer" data-role="review-actions" hidden>
+          <button type="button" class="button button--outline" data-role="reject">Reject</button>
+          <button type="button" class="button button--primary" data-role="approve">Approve</button>
+        </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="backdrop" data-role="preview-dialog" hidden>
+  <div class="dialog dialog--preview" role="dialog" aria-modal="true" aria-labelledby="preview-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="preview-title">Preview Player View</h2>
+      <button type="button" class="dialog__close" data-role="close-preview" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <!-- The tabs are Button - Nova: the selected one is Primary and the other
+         Outline, so switching tabs swaps those two classes. -->
+    <div class="preview__tabs" role="tablist">
+      <button type="button" class="button button--primary preview__tab" role="tab" aria-selected="true" data-tab="distribution">Distribution Pop-up</button>
+      <button type="button" class="button button--outline preview__tab" role="tab" aria-selected="false" data-tab="voucher">Voucher Information</button>
+    </div>
+
+    <!-- The player-facing screens live in the player app's own design file. The
+         UI design drops its 360x640 mock in here instead of respecifying them,
+         so this preview only indicates what the player sees. -->
+    <div class="dialog__body preview__body">
+      <img class="phone" data-panel="distribution" src="img/preview-distribution-popup.jpg" width="360" height="640" alt="Player view of the distribution pop-up" />
+      <img class="phone" data-panel="voucher" src="img/preview-voucher-information.jpg" width="360" height="640" alt="Player view of the voucher information screen" hidden />
+    </div>
+  </div>
+</div>
+
+<!-- Rejecting needs a reason, so it is a form dialog rather than a plain
+     confirm; Reject stays disabled until one is written. -->
+<div class="backdrop" data-role="reject-dialog" hidden>
+  <div class="dialog dialog--reject" role="dialog" aria-modal="true" aria-labelledby="reject-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="reject-title">Reject Promotion</h2>
+      <button type="button" class="dialog__close" data-role="close-reject" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="dialog__body">
+      <div class="field">
+        <label class="field__label" for="reject-reason-input">
+          Reason for rejection<span class="field__required" aria-hidden="true">*</span>
+        </label>
+        <textarea id="reject-reason-input" class="textarea" maxlength="200"
+          placeholder="Enter a reason for rejecting this promotion" data-role="reason"></textarea>
+        <p class="field__counter" data-role="reason-counter">0/200</p>
+      </div>
+    </div>
+
+    <div class="dialog__footer dialog__footer--end">
+      <button type="button" class="button button--outline" data-role="cancel-reject">Cancel</button>
+      <button type="button" class="button button--destructive" data-role="confirm-reject" disabled>Reject</button>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop" data-role="approve-dialog" hidden>
+  <div class="dialog dialog--alert" role="alertdialog" aria-modal="true" aria-labelledby="approve-title" aria-describedby="approve-text">
+    <div class="dialog__body alert-dialog__body">
+      <span class="alert-dialog__mark alert-dialog__mark--success" aria-hidden="true">
+        <span class="icon icon--file-check"></span>
+      </span>
+      <h2 class="alert-dialog__title" id="approve-title">Approve Promotion?</h2>
+      <p class="alert-dialog__text" id="approve-text">This promotion will be approved and scheduled for distribution.</p>
+    </div>
+    <div class="dialog__footer alert-dialog__footer">
+      <button type="button" class="button button--outline" data-role="cancel-approve">Cancel</button>
+      <button type="button" class="button button--primary" data-role="confirm-approve">Approve</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" data-role="toasts"></div>
+
+<script src="js/role.js"></script>
+<script src="js/detail.js"></script>
+<script src="js/activity-log.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+</body>
+</html>

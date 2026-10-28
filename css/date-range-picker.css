@@ -1,0 +1,48 @@
+/* Date range picker — extends the single-date calendar and the shared
+   .date-trigger with the two-month, range-aware variant. It no longer re-declares
+   any base rule: .date-trigger's justify-content now lives with the base in
+   app.css, and .calendar__months' narrow-screen stacking with the base in
+   calendar.css, so nothing here depends on <link> order. */
+/* Distribution Date range picker — trigger, popover and two-month calendar. */
+
+.date-trigger__value {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+.date-trigger__date {
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.date-trigger__date[data-filled="true"] {
+  color: var(--foreground);
+}
+
+.date-trigger .icon {
+  color: var(--muted-foreground);
+}
+
+/* ---------- Popover ------------------------------------------------------ */
+.popover {
+  position: absolute;
+  top: calc(100% + var(--spacing-2xs));
+  left: 0;
+  z-index: 50;
+  padding: var(--spacing-md);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.popover[hidden] {
+  display: none;
+}
+
+.popover__slot {
+  padding: var(--spacing-xs);
+}

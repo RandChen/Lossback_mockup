@@ -1,0 +1,268 @@
+/* Usage Report — the per-promotion transaction list (UX 5557:1255).
+
+   The card, filter row, table, pager and the report-page column all come from
+   app.css; detail.css carries the back link and tabs. Only this page's own
+   composition is here, and it leans on the base .table rules rather than
+   restating them. */
+
+/* Two filters and the reset; Oneworks slips Site Name in between. */
+.txn-filters {
+  --filter-cols: minmax(0, 260px) minmax(0, 220px) auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border);
+}
+
+.txn-filters:has([data-role="site-filter"]:not([hidden])) {
+  --filter-cols: minmax(0, 260px) minmax(0, 200px) minmax(0, 200px) auto;
+}
+
+/* ---------- Base Currency ------------------------------------------------ */
+/* It sits in the title row because it is not a filter: it decides what every
+   figure on the page is converted into. */
+.base-currency {
+  position: relative;
+}
+
+.base-currency__trigger {
+  width: auto;
+  min-width: 176px;
+  gap: var(--spacing-sm);
+}
+
+.base-currency__label {
+  color: var(--muted-foreground);
+}
+
+/* ---------- Total bar ----------------------------------------------------- */
+.txn-total {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--muted);
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.txn-total__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.txn-total__toggle .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--muted-foreground);
+  transition: transform 120ms ease;
+}
+
+.txn-total__toggle[aria-expanded="true"] .icon {
+  transform: rotate(180deg);
+}
+
+/* With one original currency there is nothing to break down, so the control
+   reads as plain text (UX 5557:1652). */
+.txn-total__toggle[disabled] {
+  cursor: default;
+}
+
+.txn-total__toggle[disabled] .icon {
+  display: none;
+}
+
+.txn-total__sep {
+  width: 1px;
+  height: 16px;
+  background: var(--border);
+}
+
+.txn-total__figure {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin: 0;
+}
+
+.txn-total__name {
+  color: var(--muted-foreground);
+}
+
+.txn-total__note {
+  margin: 0 0 0 auto;
+  color: var(--muted-foreground);
+}
+
+.txn-total__note[hidden] {
+  display: none;
+}
+
+/* ---------- Subtotal popover ---------------------------------------------- */
+.txn-total__popover {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: var(--spacing-sm);
+  z-index: 30;
+  min-width: 440px;
+  padding: var(--spacing-2xs) 0;
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.txn-total__popover[hidden] {
+  display: none;
+}
+
+.txn-total__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-2xs) var(--spacing-md);
+}
+
+.txn-total__row--head {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+/* ---------- Transaction table -------------------------------------------- */
+/* The UX's own proportions at its 1010 frame, as fractions so the table keeps
+   them at any width. Oneworks adds Site Name in front. */
+.txn-table {
+  --txn-cols: minmax(0, 190fr) minmax(0, 150fr) minmax(0, 233fr) minmax(0, 214fr) minmax(0, 215fr);
+  /* which track the expanded detail starts in — Trans ID */
+  --txn-detail-col: 3;
+}
+
+.txn-table .table__head,
+.txn-table .table__row {
+  grid-template-columns: var(--txn-cols);
+}
+
+.txn-table--oneworks {
+  --txn-cols: minmax(0, 120fr) minmax(0, 170fr) minmax(0, 150fr) minmax(0, 200fr) minmax(0, 185fr) minmax(0, 185fr);
+  /* Site Name pushes Trans ID one track along */
+  --txn-detail-col: 4;
+}
+
+/* A transaction is one line, so the rows are shorter than the record list's. */
+.txn-table .table__cell {
+  min-height: 45px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* The chevron sits to the left of the id and turns when the row opens. */
+.txn__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  cursor: pointer;
+}
+
+.txn__toggle .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--muted-foreground);
+  transition: transform 120ms ease;
+}
+
+.txn__toggle[aria-expanded="true"] .icon {
+  transform: rotate(90deg);
+}
+
+/* The detail line sits under its transaction, indented to the Trans ID column
+   so it reads as belonging to that row (UX 5557:1471). It borrows the row's own
+   tracks rather than a fixed indent, so it follows the columns at any width. */
+.txn__detail {
+  display: grid;
+  grid-template-columns: var(--txn-cols);
+  background: var(--muted);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.txn__detail-text {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  grid-column: var(--txn-detail-col, 3) / -1;
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.txn__detail[hidden] {
+  display: none;
+}
+
+/* A win/loss figure carries its sign and reads in the state colour; a settled
+   bet that broke even is plain, and an unsettled one shows a dash. */
+.txn__amount--up { color: var(--state-success-foreground); }
+.txn__amount--down { color: var(--state-destructive-foreground); }
+.txn__amount--none { color: var(--muted-foreground); }
+
+/* ---------- Converting ----------------------------------------------------- */
+/* Covers the total and the table only; the original figures stay visible but
+   faded underneath (UX 5567:2970). The stacking context comes from
+   .records__list in app.css. */
+.txn-converting {
+  position: absolute;
+  left: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+}
+
+.txn-converting[hidden] {
+  display: none;
+}
+
+.txn-converting__text {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.records__list--converting .txn-total,
+.records__list--converting .txn-table {
+  opacity: 0.45;
+}
+
+@media (max-width: 1100px) {
+  .txn-filters,
+  .txn-filters:has([data-role="site-filter"]:not([hidden])) {
+    --filter-cols: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* justify-self now comes from the shared rule; this only needs the span. */
+  .txn-filters .filter-card__reset {
+    grid-column: 1 / -1;
+  }
+}

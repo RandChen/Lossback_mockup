@@ -1,0 +1,625 @@
+/* Create Bonus — Step 2 (Campaign Settings), 2026-10-26.
+
+   The old Step 2 (Usage & Schedule) and Step 3 (Recipients) were merged into
+   this step. Everything here is prefixed cs- so it cannot collide with the
+   older step stylesheets that are still loaded for their shared pieces
+   (field-row, segmented). */
+
+.cs-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.cs-head .button {
+  flex: none;
+}
+
+.card__title .field__required {
+  margin-left: var(--spacing-3xs);
+}
+
+/* ---------- User Group: the three ways in -------------------------------- */
+.cs-methods {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.cs-method {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cs-method:hover {
+  background: var(--accent);
+}
+
+.cs-method:focus-visible {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}
+
+.cs-method > .icon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+.cs-method__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cs-method__title {
+  font-weight: 500;
+}
+
+.cs-method__hint {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cs-note {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.inline-error {
+  margin: 0;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border: 1px solid var(--destructive);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--destructive) 8%, var(--background));
+  color: var(--destructive);
+}
+
+.inline-error[hidden] {
+  display: none;
+}
+
+/* ---------- Lists ----------------------------------------------------------- */
+.cs-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.cs-list__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.cs-list__toolbar[hidden],
+.cs-list__footer[hidden],
+.cs-table[hidden],
+.cs-empty[hidden] {
+  display: none;
+}
+
+.cs-list__toolbar .input {
+  max-width: 280px;
+}
+
+.cs-list__actions {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.cs-list__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.cs-list__breakdown {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.cs-table {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.cs-table__head,
+.cs-table__row {
+  display: grid;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.cs-table__head {
+  background: var(--theme-neutrals-50);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.cs-table__row {
+  border-bottom: 1px solid var(--border);
+}
+
+.cs-table__row:last-child {
+  border-bottom: 0;
+}
+
+.cs-table__row--total {
+  background: var(--theme-neutrals-50);
+  font-weight: 600;
+}
+
+.cs-table__row--invalid {
+  background: color-mix(in srgb, var(--destructive) 5%, var(--background));
+}
+
+.cs-table__row--disabled {
+  color: var(--muted-foreground);
+}
+
+label.cs-table__row {
+  cursor: pointer;
+}
+
+label.cs-table__row:hover {
+  background: var(--accent);
+}
+
+.cs-table__body--scroll {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.cs-table--members .cs-table__body {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.cs-table__empty {
+  margin: 0;
+  padding: var(--spacing-md);
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.cs-table__empty[hidden] {
+  display: none;
+}
+
+.cs-table--members .cs-table__head,
+.cs-table--members .cs-table__row {
+  grid-template-columns: 20px minmax(0, 1.2fr) minmax(0, 1.4fr) 64px minmax(0, 1.2fr) 28px;
+}
+
+.cs-table--matches .cs-table__head,
+.cs-table--matches .cs-table__row {
+  grid-template-columns: 128px 84px minmax(0, 1.2fr) minmax(0, 1.6fr) 28px;
+}
+
+.cs-table--boost .cs-table__head,
+.cs-table--boost .cs-table__row,
+.cs-table--fx .cs-table__head,
+.cs-table--fx .cs-table__row {
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+}
+
+.cs-table--csv .cs-table__head,
+.cs-table--csv .cs-table__row {
+  grid-template-columns: 48px minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1.6fr);
+}
+
+.cs-table--bi .cs-table__head,
+.cs-table--bi .cs-table__row {
+  grid-template-columns: 20px minmax(0, 2fr) 96px 150px;
+}
+
+.cs-table--pick .cs-table__head,
+.cs-table--pick .cs-table__row {
+  grid-template-columns: 20px 128px minmax(0, 1.2fr) minmax(0, 1.6fr);
+}
+
+.cs-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-cell-sub {
+  display: block;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cs-cell-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-xl) var(--spacing-md);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.cs-empty--compact {
+  padding: var(--spacing-md);
+}
+
+.cs-empty__title {
+  margin: 0;
+  font-weight: 500;
+}
+
+.cs-empty__hint {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.field--invalid .cs-empty,
+.field--invalid .cs-table {
+  border-color: var(--destructive);
+}
+
+/* ---------- Max bet -------------------------------------------------------- */
+.cs-money {
+  display: flex;
+  gap: var(--spacing-xs);
+  max-width: 360px;
+}
+
+.cs-money__currency {
+  flex: none;
+  width: 96px;
+}
+
+.cs-money__currency .select {
+  width: 100%;
+  color: var(--foreground);
+}
+
+.cs-money .control {
+  flex: 1 1 auto;
+}
+
+.field--invalid .cs-money .control {
+  border-color: var(--destructive);
+}
+
+/* ---------- Dialogs -------------------------------------------------------- */
+.cs-dialog {
+  width: 520px;
+  max-height: min(640px, 100%);
+}
+
+.cs-dialog--wide {
+  width: 760px;
+}
+
+.cs-dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.cs-dialog__textarea {
+  height: 180px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-issues {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--destructive);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--destructive) 6%, var(--background));
+  color: var(--destructive);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.cs-issues[hidden] {
+  display: none;
+}
+
+.cs-issues p {
+  margin: 0;
+}
+
+.cs-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.cs-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.cs-filters__search {
+  flex: 1 1 auto;
+}
+
+.cs-result--ok {
+  color: var(--state-success-foreground, var(--foreground));
+}
+
+.cs-result--error {
+  color: var(--destructive);
+}
+
+.cs-result--skip {
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 720px) {
+  .cs-methods {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-head {
+    flex-direction: column;
+  }
+
+  .cs-table--members .cs-table__head,
+  .cs-table--members .cs-table__row {
+    grid-template-columns: 20px minmax(0, 1fr) 56px 28px;
+  }
+
+  .cs-table--members [data-col="site"],
+  .cs-table--members [data-col="source"] {
+    display: none;
+  }
+
+  .cs-table--matches .cs-table__head,
+  .cs-table--matches .cs-table__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) 28px;
+  }
+
+  .cs-table--matches [data-col="sport"],
+  .cs-table--matches [data-col="league"] {
+    display: none;
+  }
+}
+
+/* ---------- Review (Step 3) ---------------------------------------------- */
+.review-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.review-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.review-block .card__subtitle {
+  margin: 0;
+}
+
+.review-banner {
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  height: 80px;
+  border-radius: var(--radius-sm);
+  background: var(--theme-neutrals-50);
+  object-fit: cover;
+}
+
+/* ---------- Max bet, one input per currency (2026-10-26) ------------------- */
+.cs-table--maxbet .cs-table__head,
+.cs-table--maxbet .cs-table__row {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1.4fr);
+}
+
+.cs-maxbet-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+}
+
+.cs-maxbet-input .control {
+  max-width: 220px;
+}
+
+.cs-maxbet-input .control--invalid {
+  border-color: var(--destructive);
+}
+
+.cs-maxbet-input .cs-maxbet-error {
+  margin: 0;
+  color: var(--destructive);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* The per-row inputs carry the red border; the field's own frame stays put. */
+.field--invalid .cs-table--maxbet {
+  border-color: var(--border);
+}
+
+/* ==========================================================================
+   Lossback (2026-10-26)
+   ========================================================================== */
+.cs-period {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-md);
+}
+
+.cs-period[hidden] {
+  display: none;
+}
+
+.cs-callout,
+.cs-formula {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  background: var(--theme-neutrals-50);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.cs-callout {
+  color: var(--foreground);
+}
+
+.cs-formula p {
+  margin: 0;
+}
+
+.cs-formula p + p {
+  margin-top: var(--spacing-2xs);
+}
+
+.control--pct {
+  max-width: 200px;
+}
+
+.cs-table--amounts .cs-table__head,
+.cs-table--amounts .cs-table__row {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.cs-table--amounts .cs-table__row > span:first-child {
+  padding-top: 6px;
+}
+
+.cs-ref {
+  padding-top: 6px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.cs-sim {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.cs-sim__title {
+  margin: 0;
+  font-weight: 500;
+}
+
+.cs-sim__inputs {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--spacing-xs);
+}
+
+.cs-sim__inputs .select {
+  width: 100%;
+  color: var(--foreground);
+}
+
+.cs-sim__result {
+  margin: 0;
+  color: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-sports {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-left: 24px;
+}
+
+.cs-sports[hidden] {
+  display: none;
+}
+
+.cs-table--sports .cs-table__head,
+.cs-table--sports .cs-table__row {
+  grid-template-columns: 100px minmax(0, 1.6fr) minmax(0, 1.2fr) 28px;
+}
+
+.cs-checks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  max-height: 200px;
+  overflow-y: auto;
+  padding: var(--spacing-2xs);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.cs-check-all {
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.cs-select-full,
+.cs-select-full .select {
+  width: 100%;
+  color: var(--foreground);
+}
+
+.cs-table--pick .radio {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .cs-table--amounts .cs-table__head,
+  .cs-table--amounts .cs-table__row {
+    grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .cs-table--amounts .cs-table__head > span:last-child,
+  .cs-ref {
+    display: none;
+  }
+
+  .cs-sim__inputs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

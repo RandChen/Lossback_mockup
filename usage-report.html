@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Usage Report — Free Bet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/detail.css" />
+<link rel="stylesheet" href="css/usage-report.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <a class="nav-item" href="index.html">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </a>
+        <div class="nav-sub">
+          <a class="nav-sub-item nav-sub-item--active" href="index.html">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Free Bet</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">99</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="detail">
+
+        <div class="detail__top">
+          <a class="back-link" href="index.html">
+            <span class="icon icon--chevron-left" aria-hidden="true"></span>
+            Free Bet
+          </a>
+
+          <nav class="tabs" aria-label="Bonus promotion sections">
+            <a class="tab" href="detail.html?status=distributed">
+              <span class="tab__label">Overview</span>
+            </a>
+            <a class="tab" href="distribution-records.html">
+              <span class="tab__label">Distribution Records</span>
+            </a>
+            <a class="tab tab--active" href="#" aria-current="page">
+              <span class="tab__label">Usage Report</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="records__column">
+
+          <!-- The UX puts no Activity Log here: this page only reports, it has
+               no actions to record. -->
+          <div class="page-head">
+            <div class="page-head__title">
+              <div class="page-head__heading">
+                <h1>Usage Report</h1>
+              </div>
+            </div>
+          </div>
+
+          <p class="records__date">Distribution Date: 2026/07/28 10:00 (GMT-4)</p>
+
+          <section class="card records__list">
+            <!-- Base Currency lives in the title row now, not with the filters:
+                 it is not a filter, it decides what every figure is converted
+                 into (UX 5557:1664). -->
+            <div class="card__head records__list-head">
+              <h2 class="card__title">Transaction List</h2>
+              <div class="records__list-actions">
+                <div class="filter-select base-currency" data-role="base-filter">
+                  <button type="button" class="select base-currency__trigger" aria-haspopup="listbox" aria-expanded="false" data-role="base-trigger">
+                    <span><span class="base-currency__label">Base Currency:</span> <span data-role="base-value">USD</span></span>
+                    <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                  </button>
+                  <div class="filter-select__panel" data-role="base-panel" role="listbox" hidden></div>
+                </div>
+
+                <div class="batch-action" data-role="export">
+                  <button type="button" class="button button--outline" data-role="export-trigger" aria-haspopup="menu" aria-expanded="false">
+                    <span class="icon icon--download" aria-hidden="true"></span>
+                    Export All
+                    <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                  </button>
+                  <div class="batch-action__menu" data-role="export-menu" role="menu" hidden>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="export-all">All records</button>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="export-filtered">Filtered results</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section class="filter-card records__filters txn-filters" aria-label="Filters">
+              <div class="field">
+                <label class="field__label" for="txn-search">Vendor Member ID</label>
+                <div class="input">
+                  <span class="icon icon--search" aria-hidden="true"></span>
+                  <input id="txn-search" type="text" placeholder="Search Vendor Member ID" data-role="search" />
+                </div>
+              </div>
+
+              <!-- Oneworks only: the operator sees every site under it. -->
+              <div class="field filter-select" data-role="site-filter" hidden>
+                <label class="field__label" id="site-label">Site Name</label>
+                <button type="button" class="select" aria-labelledby="site-label" aria-haspopup="listbox" aria-expanded="false" data-role="site-trigger">
+                  <span class="select__tags" data-role="site-value"><span class="select__placeholder">Select</span></span>
+                  <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                </button>
+                <div class="filter-select__panel" data-role="site-panel" role="listbox" hidden></div>
+              </div>
+
+              <div class="field filter-select" data-role="original-filter">
+                <label class="field__label" id="original-label">Original Currency</label>
+                <button type="button" class="select" aria-labelledby="original-label" aria-haspopup="listbox" aria-expanded="false" data-role="original-trigger">
+                  <span data-role="original-value"><span class="select__placeholder">Select</span></span>
+                  <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                </button>
+                <div class="filter-select__panel" data-role="original-panel" role="listbox" hidden></div>
+              </div>
+
+              <button type="button" class="button button--ghost filter-card__reset" data-role="reset" disabled>
+                <span class="icon icon--reset" aria-hidden="true"></span>
+                Reset
+              </button>
+            </section>
+
+            <!-- One total line above the table. The label opens a popover with
+                 the per-currency subtotals (UX 5557:1646, 5567:2478). -->
+            <div class="txn-total" data-role="total">
+              <button type="button" class="txn-total__toggle" data-role="total-toggle" aria-expanded="false">
+                <span data-role="total-label">Total in USD</span>
+                <span class="icon icon--chevron-down" aria-hidden="true"></span>
+              </button>
+              <span class="txn-total__sep" aria-hidden="true"></span>
+              <p class="txn-total__figure">
+                <span class="txn-total__name">Player Win Loss</span>
+                <span data-role="total-player">0.00</span>
+              </p>
+              <span class="txn-total__sep" aria-hidden="true"></span>
+              <p class="txn-total__figure">
+                <span class="txn-total__name">Licensee Win Loss</span>
+                <span data-role="total-licensee">0.00</span>
+              </p>
+              <p class="txn-total__note" data-role="unsettled" hidden></p>
+
+              <div class="txn-total__popover" data-role="total-popover" hidden>
+                <div class="txn-total__row txn-total__row--head">
+                  <span>Original Currency</span>
+                  <span>Player Win Loss</span>
+                  <span>Licensee Win Loss</span>
+                </div>
+                <div data-role="total-rows"></div>
+              </div>
+            </div>
+
+            <div class="table txn-table" role="table" aria-label="Transactions" data-role="table">
+              <div class="table__head" role="row">
+                <div class="table__th" role="columnheader" data-role="site-column" hidden>Site Name</div>
+                <div class="table__th" role="columnheader">Vendor Member ID</div>
+                <div class="table__th" role="columnheader">Original Currency</div>
+                <div class="table__th" role="columnheader">Trans ID</div>
+                <div class="table__th" role="columnheader">Player Win Loss</div>
+                <div class="table__th" role="columnheader">Licensee Win Loss</div>
+              </div>
+              <div data-role="rows"></div>
+
+              <div class="table-empty" data-role="empty" hidden>
+                <img class="table-empty__art" src="icons/nodata.svg" width="180" height="180" alt="" />
+                <div class="table-empty__content">
+                  <p class="table-empty__title">No transactions found</p>
+                  <p class="table-empty__hint">Try another Vendor Member ID or adjust the filters.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Converting only covers the total and the table; the rest of the
+                 card stays put but goes inert (UX 5567:2970). -->
+            <div class="txn-converting" data-role="converting" hidden>
+              <span class="txn-converting__text" data-role="converting-text">Converting to IDR…</span>
+            </div>
+
+            <div class="pager" data-role="pager">
+              <p class="pager__count" data-role="range">1–7 / 7</p>
+              <div class="records__per-page">
+                <label class="field__label" for="per-page">Row per page</label>
+                <span class="select-native">
+                  <select id="per-page" class="select records__per-page-select" data-role="per-page">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                  </select>
+                  <span class="icon icon--chevron-down select-native__chevron" aria-hidden="true"></span>
+                </span>
+              </div>
+              <nav class="pagination" aria-label="Pagination">
+                <button type="button" class="button button--ghost" data-role="prev">Previous</button>
+                <div class="pagination__pages" data-role="pages"></div>
+                <button type="button" class="button button--ghost" data-role="next">Next</button>
+              </nav>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="js/role.js"></script>
+<script src="js/usage-report.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+</body>
+</html>

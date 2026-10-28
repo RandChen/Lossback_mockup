@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Approval Inbox — Promotion Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/toast.css" />
+<link rel="stylesheet" href="css/approval-inbox.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <a class="nav-item" href="index.html">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <a class="nav-item nav-item--active" href="approval-inbox.html" aria-current="page">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge" data-role="sidebar-count">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">99</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="area">
+
+        <div class="page-head">
+          <div class="page-head__title">
+            <div class="page-head__heading">
+              <h1>Approval Inbox</h1>
+            </div>
+          </div>
+        </div>
+
+        <!-- The three tabs are the Approval Inbox's whole scope; Draft and
+             Deleted live on the Bonus list, never here. -->
+        <div class="tabs" role="tablist" aria-label="Approval status">
+          <button type="button" class="tab" role="tab" data-tab="pending">
+            <span class="tab__label">Pending Review</span>
+            <span class="tab__count" data-role="count-pending">0</span>
+          </button>
+          <button type="button" class="tab" role="tab" data-tab="approved">
+            <span class="tab__label">Approved<span class="tab__dot" data-role="dot-approved" aria-label="Unread" hidden></span></span>
+          </button>
+          <button type="button" class="tab" role="tab" data-tab="rejected">
+            <span class="tab__label">Rejected<span class="tab__dot" data-role="dot-rejected" aria-label="Unread" hidden></span></span>
+          </button>
+        </div>
+
+        <div class="table review-table" role="table" aria-label="Approval queue" data-role="table">
+          <div class="table__head" role="row" data-role="head"></div>
+          <div data-role="rows"></div>
+        </div>
+
+        <div class="table-empty" data-role="empty" hidden>
+          <img class="table-empty__art" src="icons/empty.svg" width="180" height="180" alt="" />
+          <div class="table-empty__content">
+            <p class="table-empty__title" data-role="empty-title"></p>
+            <p class="table-empty__hint" data-role="empty-hint"></p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- 這頁目前不會發 toast（審核動作在 detail.html，toast 也跳在那裡），殼先留著，
+     預留給之後可能在列表上直接批次 Approve／Reject 的情境。2026-10-02 Elena 決定保留。 -->
+<div class="toast-stack" data-role="toasts"></div>
+
+<script src="js/role.js"></script>
+<script src="js/approval-inbox.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+</body>
+</html>

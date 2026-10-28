@@ -1,0 +1,61 @@
+/* Approval Inbox — the Pending Review / Approved / Rejected queues.
+
+   The state diagram (UX 3958:68596) puts only these three inside the inbox:
+   Draft and Deleted belong to the Bonus list and never appear here. */
+
+/* ---------- Queue table ---------------------------------------------------- */
+/* Each tab carries a different set of columns, so the template follows the
+   tab rather than being written once. */
+.review-table[data-tab="pending"] .table__head,
+.review-table[data-tab="pending"] .table__row {
+  grid-template-columns:
+    minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1.6fr) 134px;
+}
+
+.review-table[data-tab="approved"] .table__head,
+.review-table[data-tab="approved"] .table__row,
+.review-table[data-tab="rejected"] .table__head,
+.review-table[data-tab="rejected"] .table__row {
+  grid-template-columns:
+    minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1.4fr) minmax(0, 1.4fr) 110px;
+}
+
+/* The promotion cell stacks its name, id and — when there is one — a tag. */
+.review-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-3xs);
+  min-width: 0;
+}
+
+.review-cell__name {
+  font-weight: 500;
+}
+
+.review-cell__id,
+.review-cell__meta {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.review-cell__tag {
+  margin-top: var(--spacing-3xs);
+}
+
+/* A submission that passed its distribution date without being reviewed. The
+   Expired tag carries that on its own, so the row keeps the normal background
+   and only its values read as inactive; the action stays live so the reviewer
+   can still open it. */
+.table__row--expired .review-cell__name,
+.table__row--expired .table__cell {
+  color: var(--muted-foreground);
+}
+
+/* The action sits at the start of its cell like every other cell's content —
+   .table__cell already stacks and left-aligns, so only the alignment that was
+   overriding it needs stating. */
+.review-action {
+  align-items: flex-start;
+}

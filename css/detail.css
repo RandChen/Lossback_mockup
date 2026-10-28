@@ -1,0 +1,181 @@
+/* Bonus Detail — Overview tab. The back link, the tabs and the rule under them
+   run the full content width; the title and the cards sit in a 750 column
+   centred beneath it. */
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  /* main-content is inset 20 on every side, so the back link, the tabs and the
+     rule under them stop short of the content area's edges too. */
+  padding: var(--spacing-lg);
+}
+
+.detail__top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.detail__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 750px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--border);
+}
+
+/* ---------- Title row ---------------------------------------------------- */
+.detail__head {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-height: 52px;
+}
+
+.detail__head h1 {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 22px;
+  line-height: 26.4px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.detail__footer {
+  display: flex;
+  justify-content: flex-end;
+  /* Same 12 between buttons as the detail header and the wizard footer. */
+  gap: var(--spacing-sm);
+}
+
+
+.card__subtitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+/* ---------- Review blocks ------------------------------------------------ */
+/* Spacing comes from the card's own auto-layout: 24 between everything the
+   card stacks — sub-heading, row group, rule — and 12 between the rows that
+   belong to one sport. The card shell already carries the 24, so nothing here
+   overrides it. */
+.review-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.sport-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.sport-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.card--review .list-area {
+  gap: var(--spacing-xl);
+}
+
+/* One sport's three rows, closed off by a rule. */
+.card--review .list-area--tight {
+  gap: var(--spacing-sm);
+}
+
+/* ---------- Label / value rows ------------------------------------------- */
+.list-area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* Rows that belong to one sports condition sit closer together and are closed
+   off by a separator. */
+.list-area--tight {
+  gap: var(--spacing-sm);
+}
+
+/* The label column is a fixed 225 in the design, with the value beside it.
+   The drawn gap is 50, which is not on the spacing scale, so this uses the
+   nearest step. */
+.list {
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr);
+  column-gap: var(--spacing-3xl);
+  align-items: start;
+}
+
+.list__label {
+  color: var(--info);
+}
+
+.list__value {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.list__value > p {
+  width: 100%;
+}
+
+.note {
+  padding: var(--spacing-sm);
+  background: var(--note-background);
+  border-radius: var(--radius-md);
+}
+
+
+
+/* The odds format is a muted label beside the value, not part of it. */
+.unit {
+  margin-left: var(--spacing-xs);
+  color: var(--muted-foreground);
+}
+
+.blue-link {
+  border-bottom: 1px solid var(--bluelink);
+  color: var(--bluelink);
+  text-decoration: none;
+}
+
+/* blue-link, Property 1=hover. */
+.blue-link:hover {
+  border-bottom-color: var(--bluelink-secondary);
+  color: var(--bluelink-secondary);
+}
+
+@media (max-width: 960px) {
+  .detail {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .list {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--spacing-2xs);
+  }
+}
+
+/* Who submitted the promotion and when — only the reviewer's view shows it. */
+.detail__submitted {
+  margin: 0;
+  color: var(--muted-foreground);
+}

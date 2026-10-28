@@ -1,0 +1,137 @@
+/* Notification Bell — the panel that drops from the top bar's bell.
+
+   Shared by every page, because the bell is part of the top bar. The five
+   notification types and who receives each one come from the UX's Scenario
+   Table (3984:71636). */
+
+.icon--circle-x { -webkit-mask-image: url("../icons/circle-x.svg"); mask-image: url("../icons/circle-x.svg"); }
+
+.notification__panel {
+  position: absolute;
+  top: calc(100% + var(--spacing-xs));
+  right: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: 370px;
+  max-height: 392px;
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.notification__panel[hidden] {
+  display: none;
+}
+
+.notification__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.notification__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+/* "Mark all as read" is Button - Nova, Outline at the Extra small size; it has
+   nothing left to do once everything has been read, and .button[disabled]
+   already dims it. */
+
+/* All / Unread is the same underlined tab component the Approval Inbox uses
+   (.tabs / .tab in app.css). Only the panel's own gutter is described here;
+   the tab, its underline and its count all come from the shared component. */
+.notification__tabs {
+  gap: var(--spacing-xl);
+  padding: 0 var(--spacing-md);
+}
+
+.notification__tabs[hidden] {
+  display: none;
+}
+
+.notification__list {
+  overflow-y: auto;
+  scrollbar-color: var(--border) transparent;
+  scrollbar-width: thin;
+}
+
+.notification__list::-webkit-scrollbar { width: 6px; }
+.notification__list::-webkit-scrollbar-track { background: transparent; }
+.notification__list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+
+.notification__item {
+  display: flex;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The tab row's underline already separates the list from the filter. */
+.notification__item:first-child {
+  border-top: 0;
+}
+
+.notification__item:hover {
+  background: var(--accent);
+}
+
+/* An unread notification sits on a tint until it is read. */
+.notification__item--unread {
+  background: var(--muted);
+}
+
+.notification__icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: var(--spacing-3xs);
+}
+
+.notification__icon--pending { color: var(--state-warning-foreground); }
+.notification__icon--approved { color: var(--state-success-foreground); }
+.notification__icon--rejected { color: var(--state-destructive-foreground); }
+.notification__icon--distributed { color: var(--foreground); }
+/* triangle-alert 在設計系統裡配的是 warning 橘，跟 Alert Dialog 的
+   Decorative Icon 同一組（state/warning foreground）。 */
+.notification__icon--failed { color: var(--state-warning-foreground); }
+
+.notification__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+.notification__text {
+  margin: 0;
+}
+
+/* The promotion's own name is what the reader scans for. */
+.notification__text b {
+  font-weight: 600;
+}
+
+.notification__time {
+  margin: 0;
+  color: var(--muted-foreground);
+}

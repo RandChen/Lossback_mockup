@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Create Campaign — Lossback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/calendar.css" />
+<link rel="stylesheet" href="css/datetime-picker.css" />
+<link rel="stylesheet" href="css/create-bonus.css" />
+<link rel="stylesheet" href="css/toast.css" />
+<link rel="stylesheet" href="css/campaign-settings.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <button type="button" class="nav-item nav-item--active" aria-expanded="true">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="nav-sub">
+          <a class="nav-sub-item nav-sub-item--active" href="index.html" aria-current="page">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Lossback</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">99</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="wizard">
+
+        <!-- The back link runs the full content width; the title, the steps
+             and the cards sit in the 750 column centred beneath it. -->
+        <div class="wizard__top">
+          <a class="back-link" href="index.html" data-role="back-link">
+            <span class="icon icon--chevron-left" aria-hidden="true"></span>
+            Lossback
+          </a>
+        </div>
+
+        <div class="wizard__column">
+        <div class="wizard__head">
+          <h1>Create Campaign</h1>
+        </div>
+
+        <ol class="steps" aria-label="Create Campaign steps">
+          <li class="step step--current" aria-current="step">
+            <span class="step__badge">1</span>
+            <span class="step__bar"></span>
+            <span class="step__label">General</span>
+          </li>
+          <li class="step">
+            <span class="step__badge">2</span>
+            <span class="step__bar"></span>
+            <span class="step__label">Campaign Settings</span>
+          </li>
+          <li class="step">
+            <span class="step__badge">3</span>
+            <span class="step__bar"></span>
+            <span class="step__label">Review</span>
+          </li>
+        </ol>
+
+        <!-- Cards and the footer sit 20 apart inside their own block. -->
+        <div class="wizard__body">
+
+          <!-- Settings that went stale while the draft sat; filled by
+               stale-check.js, which also decides whether an error belongs here
+               or on this step's own field. -->
+          <div data-role="stale-message" hidden></div>
+
+        <form class="wizard__cards" novalidate data-role="form">
+
+          <!-- Who join the campaign. What can be picked depends on who is
+               signed in (top bar role + scope), drawn by create-bonus.js:
+                 SABA (Oneworks)  one or more Licensees, any site or subsidiary
+                 Main Site        itself and/or its Subsidiaries
+                 Subsidiary       itself only, read-only -->
+          <section class="card" aria-labelledby="participants-title">
+            <div class="card__intro">
+              <h2 class="card__title" id="participants-title">Who Join the Campaign</h2>
+              <p class="field__description" data-role="participants-hint"></p>
+            </div>
+            <div class="field" data-field="participants">
+              <div data-role="participants"></div>
+            </div>
+          </section>
+
+          <!-- User Group: every Main Site and Subsidiary that joins has its own
+               group (Manually Enter, CSV Upload or Saba BI Tag). Drawn per site
+               by js/user-group.js from the sites ticked above. -->
+          <section class="card" aria-labelledby="ug-title">
+            <div class="card__intro">
+              <h2 class="card__title" id="ug-title">User Group<span class="field__required" aria-hidden="true">*</span></h2>
+              <p class="field__description">Each site that joins sets its own user group. Add players in any combination of the three ways; duplicates are merged.</p>
+            </div>
+            <div class="cs-note">
+              <span>CSV column: Vendor Member ID · up to 10,000 rows per file</span>
+              <button type="button" class="link-button" data-role="download-template">
+                <span class="icon icon--download" aria-hidden="true"></span>
+                Download Template
+              </button>
+              <input id="csv-file" type="file" accept=".csv" hidden />
+            </div>
+            <p class="inline-error" data-role="file-error" role="alert" hidden></p>
+            <div class="ug-sites" data-role="user-groups"></div>
+          </section>
+
+          <section class="card" aria-labelledby="general-title">
+            <h2 class="card__title" id="general-title">General</h2>
+
+            <div class="field" data-field="promotion-name">
+              <label class="field__label" for="promotion-name">
+                Campaign Internal Name<span class="field__required" aria-hidden="true">*</span>
+              </label>
+              <p class="field__description">For internal identification only. Not shown to players.</p>
+              <div class="control">
+                <input id="promotion-name" name="promotion-name" type="text" placeholder="e.g. World Cup Free Bet" />
+              </div>
+            </div>
+
+            <div class="field" data-field="note">
+              <label class="field__label" for="note">Bonus Promotion Note</label>
+              <p class="field__description">For internal reference only.</p>
+              <textarea id="note" name="note" class="textarea" placeholder="e.g. Add notes or context for reference"></textarea>
+            </div>
+          </section>
+
+          <!-- One block per language: External Name, Banner, T&C. English is
+               always there; the rest come from Select Languages. -->
+          <section class="card" aria-labelledby="content-title">
+            <div class="card__intro">
+              <h2 class="card__title" id="content-title">Campaign Content</h2>
+              <p class="field__description">Shown to players. Every language added needs its own External Name and T&amp;C. Desktop and Mobile banners are optional.</p>
+            </div>
+
+            <div class="lang-blocks" data-role="language-fields"></div>
+
+            <button type="button" class="button button--secondary button--small" data-role="open-languages">
+              <span class="icon icon--plus" aria-hidden="true"></span>
+              Select Languages
+            </button>
+          </section>
+
+          <section class="card" aria-labelledby="promo-title">
+            <div class="card__intro">
+              <h2 class="card__title" id="promo-title">Promotion Page</h2>
+              <p class="field__description">How the campaign is listed on the player-facing promotion page.</p>
+            </div>
+
+            <div class="field" data-field="promo-order">
+              <label class="field__label" for="promo-order">
+                Display Order<span class="field__required" aria-hidden="true">*</span>
+              </label>
+              <p class="field__description">A whole number from 1 to 99. 1 is listed first.</p>
+              <div class="control control--order">
+                <input id="promo-order" name="promo-order" type="text" inputmode="numeric" maxlength="2" placeholder="1–99" />
+              </div>
+            </div>
+
+            <div class="field" data-field="promo-start">
+              <label class="field__label" for="promo-start-date">
+                Display Start Time<span class="field__required" aria-hidden="true">*</span>
+              </label>
+              <div class="datetime">
+                <div class="control">
+                  <input id="promo-start-date" type="text" placeholder="Select date" data-role="date" />
+                  <span class="icon icon--calendar" aria-hidden="true"></span>
+                </div>
+                <div class="datetime__half">
+                  <div class="control control--time">
+                    <input id="promo-start-time" type="text" placeholder="--:--" maxlength="5" data-role="time" />
+                  </div>
+                  <span class="datetime__zone">(GMT-4)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="field" data-field="promo-end">
+              <label class="field__label" for="promo-end-date">
+                Display End Time<span class="field__required" aria-hidden="true">*</span>
+              </label>
+              <div class="datetime">
+                <div class="control">
+                  <input id="promo-end-date" type="text" placeholder="Select date" data-role="date" />
+                  <span class="icon icon--calendar" aria-hidden="true"></span>
+                </div>
+                <div class="datetime__half">
+                  <div class="control control--time">
+                    <input id="promo-end-time" type="text" placeholder="--:--" maxlength="5" data-role="time" />
+                  </div>
+                  <span class="datetime__zone">(GMT-4)</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+        <div class="wizard__footer">
+          <button type="button" class="button button--outline" data-role="cancel">Cancel</button>
+          <div class="wizard__actions">
+            <button type="button" class="button button--outline" data-role="save-draft">Save Draft</button>
+            <button type="button" class="button button--primary" data-role="next">Next</button>
+          </div>
+        </div>
+        </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="backdrop" data-role="languages-dialog" hidden>
+  <div class="dialog dialog--languages" role="dialog" aria-modal="true" aria-labelledby="languages-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="languages-title">Select Languages</h2>
+      <button type="button" class="dialog__close" data-role="close-languages" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="dialog__body">
+      <div class="option-list" data-role="language-options"></div>
+    </div>
+
+    <div class="dialog__footer">
+      <div class="dialog__footer-lead">
+        <span class="selected-count"><strong data-role="selected-count">0</strong> selected</span>
+        <button type="button" class="button button--ghost" data-role="clear-languages" disabled>Clear</button>
+      </div>
+      <button type="button" class="button button--primary" data-role="add-languages" disabled>Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Manually Enter (for the site whose block opened it) -->
+<div class="backdrop" data-role="manual-dialog" hidden>
+  <div class="dialog cs-dialog" role="dialog" aria-modal="true" aria-labelledby="manual-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="manual-title">Manually Enter</h2>
+      <button type="button" class="dialog__close" data-role="close-manual" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="dialog__body cs-dialog__body">
+      <p class="field__description">Adding to: <strong data-role="manual-site"></strong></p>
+      <div class="field">
+        <label class="field__label" for="manual-ids">Vendor Member IDs</label>
+        <p class="field__description">One per line, or separated by commas or spaces. Up to 500 at a time. Only members of this site are accepted.</p>
+        <textarea id="manual-ids" class="textarea cs-dialog__textarea" placeholder="e.g. M1001-001&#10;M1001-002"></textarea>
+        <p class="field__message" data-role="manual-count">0 IDs</p>
+      </div>
+      <div class="cs-issues" data-role="manual-issues" hidden></div>
+    </div>
+    <div class="dialog__footer dialog__footer--end">
+      <button type="button" class="button button--outline" data-role="cancel-manual">Cancel</button>
+      <button type="button" class="button button--primary" data-role="save-manual" disabled>Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- CSV preview -->
+<div class="backdrop" data-role="csv-dialog" hidden>
+  <div class="dialog cs-dialog cs-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="csv-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="csv-title">Import Preview</h2>
+      <button type="button" class="dialog__close" data-role="close-csv" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="dialog__body cs-dialog__body">
+      <div class="cs-summary" data-role="csv-summary"></div>
+      <div class="cs-table cs-table--csv cs-table--csv3">
+        <div class="cs-table__head">
+          <span>Row</span>
+          <span>Vendor Member ID</span>
+          <span>Result</span>
+        </div>
+        <div class="cs-table__body cs-table__body--scroll" data-role="csv-rows"></div>
+      </div>
+    </div>
+    <div class="dialog__footer dialog__footer--end">
+      <button type="button" class="button button--outline" data-role="cancel-csv">Cancel</button>
+      <button type="button" class="button button--primary" data-role="confirm-csv">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- Saba BI Tag -->
+<div class="backdrop" data-role="bi-dialog" hidden>
+  <div class="dialog cs-dialog cs-dialog--wide" role="dialog" aria-modal="true" aria-labelledby="bi-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="bi-title">Import from Saba BI Tag</h2>
+      <button type="button" class="dialog__close" data-role="close-bi" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="dialog__body cs-dialog__body">
+      <p class="field__description" data-role="bi-site"></p>
+      <div class="input">
+        <span class="icon icon--search" aria-hidden="true"></span>
+        <input type="text" placeholder="Search tag name or ID" data-role="bi-search" />
+      </div>
+      <div class="cs-table cs-table--bi">
+        <div class="cs-table__head">
+          <span></span>
+          <span>Tag</span>
+          <span>Updated</span>
+          <span>Members in this site</span>
+        </div>
+        <div class="cs-table__body" data-role="bi-rows"></div>
+      </div>
+    </div>
+    <div class="dialog__footer">
+      <div class="dialog__footer-lead">
+        <span class="selected-count"><strong data-role="bi-count">0</strong> members selected</span>
+      </div>
+      <button type="button" class="button button--outline" data-role="cancel-bi">Cancel</button>
+      <button type="button" class="button button--primary" data-role="confirm-bi" disabled>Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete members -->
+<div class="backdrop" data-role="delete-dialog" hidden>
+  <div class="dialog dialog--alert" role="alertdialog" aria-modal="true" aria-labelledby="delete-title" aria-describedby="delete-text">
+    <div class="dialog__body alert-dialog__body">
+      <span class="alert-dialog__mark alert-dialog__mark--warning" aria-hidden="true">
+        <span class="icon icon--triangle-alert"></span>
+      </span>
+      <h2 class="alert-dialog__title" id="delete-title">Delete players?</h2>
+      <p class="alert-dialog__text" id="delete-text" data-role="delete-text"></p>
+    </div>
+    <div class="dialog__footer alert-dialog__footer">
+      <button type="button" class="button button--outline" data-role="cancel-delete">Cancel</button>
+      <button type="button" class="button button--destructive-soft" data-role="confirm-delete">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" data-role="toasts"></div>
+
+<div class="backdrop" data-role="leave-dialog" hidden>
+  <div class="dialog dialog--alert" role="alertdialog" aria-modal="true" aria-labelledby="leave-title" aria-describedby="leave-text">
+    <div class="dialog__body alert-dialog__body">
+      <span class="alert-dialog__mark alert-dialog__mark--warning" aria-hidden="true">
+        <span class="icon icon--triangle-alert"></span>
+      </span>
+      <h2 class="alert-dialog__title" id="leave-title">Leave this page?</h2>
+      <p class="alert-dialog__text" id="leave-text">Your unsaved changes will be lost.</p>
+    </div>
+    <div class="dialog__footer alert-dialog__footer">
+      <button type="button" class="button button--outline" data-role="keep-editing">Keep Editing</button>
+      <button type="button" class="button button--destructive-soft" data-role="leave">Leave</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/role.js"></script>
+<script src="js/wizard-state.js"></script>
+<script src="js/campaign-data.js"></script>
+<script src="js/datetime-picker.js"></script>
+<script src="js/search-highlight.js"></script>
+<script src="js/stale-check.js"></script>
+<script src="js/user-group.js"></script>
+<script src="js/create-bonus.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/steps.js"></script>
+</body>
+</html>

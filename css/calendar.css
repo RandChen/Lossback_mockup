@@ -1,0 +1,143 @@
+/* Calendar - Nova: month grid and day cells, shared by the range picker on
+   the list page and the single-date picker in the wizard. */
+
+/* ---------- Calendar ----------------------------------------------------- */
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.calendar__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.calendar__caption {
+  flex: 1 1 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.calendar__spacer {
+  width: 28px;
+  flex: none;
+}
+
+.calendar__months {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+/* 兩個月並排的 range picker 在窄螢幕改為上下堆疊。精靈頁的單月曆只有一格，
+   這條對它是 no-op。 */
+@media (max-width: 720px) {
+  .calendar__months {
+    flex-direction: column;
+  }
+}
+
+.calendar__grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar__row {
+  display: flex;
+}
+
+.calendar__row + .calendar__row {
+  padding-top: var(--spacing-xs);
+}
+
+.calendar__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* ---------- Day cells ---------------------------------------------------- */
+/* Cells sit flush against each other so a selected range reads as one
+   continuous band; only the two ends of the band get rounded corners. */
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.day--outside {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.day:not(.day--outside):not(.day--selected):hover {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+/* .Calendar / Day - Nova, State=today: a 1px secondary outline on the page
+   background — not a filled cell. */
+.day--today:not(.day--selected) {
+  background: var(--background);
+  border: 1px solid var(--secondary);
+  border-radius: var(--radius-sm);
+}
+
+.day--range-middle {
+  background: var(--secondary);
+  color: var(--foreground);
+  border-radius: 0;
+}
+
+.day--range-start,
+.day--range-end {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.day--range-start {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.day--range-end {
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* A single selected day, or a start with no end chosen yet, rounds on both
+   sides because there is no band for it to join. */
+.day--range-start.day--range-end,
+.day--range-start:not(.day--has-range) {
+  border-radius: var(--radius-sm);
+}
+
+.day--range-start:active,
+.day--range-end:active {
+  background: color-mix(in srgb, var(--theme-neutrals-1000) 5%, var(--primary));
+}
+
+.day:focus-visible {
+  outline: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+}

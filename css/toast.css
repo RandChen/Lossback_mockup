@@ -1,0 +1,133 @@
+/* Toast — shared by the Bonus list and the Create Bonus steps.
+
+   The design only draws it on the list page (UI file, UI-mockup-Bonus
+   Management), so the wizard's own toasts reuse the same component rather than
+   inventing a second look. */
+
+.icon--check-circle { -webkit-mask-image: url("../icons/check-circle-fill.svg"); mask-image: url("../icons/check-circle-fill.svg"); }
+.icon--attention-circle { -webkit-mask-image: url("../icons/attention-circle-fill.svg"); mask-image: url("../icons/attention-circle-fill.svg"); }
+
+/* ---------- Toast ---------------------------------------------------------- */
+/* The UX puts the stack in the content area — below the 60px top bar, right
+   aligned — and keeps it there while the content scrolls. */
+.toast-stack {
+  position: fixed;
+  top: calc(60px + var(--spacing-md));
+  right: var(--spacing-lg);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.toast-alert {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 400px;
+  max-width: calc(100vw - var(--spacing-3xl));
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.toast-alert--success {
+  background: var(--state-success-soft);
+  border-color: var(--state-success-foreground);
+}
+
+.toast-alert--notice {
+  background: var(--state-destructive-soft);
+  border-color: var(--alert-destructive-border, var(--state-destructive-foreground));
+}
+
+/* toast-alert's own `Icon + Content` row. It hugs its height and the toast
+   centres it, so a one-line toast sits level with the dismiss button instead of
+   riding above it (4908:10520); with two lines the row is the tallest child and
+   the centring is a no-op (4155:21172). The icon pins to the top of this row,
+   not of the toast, so it stays on the title's line either way. */
+.toast-alert__main {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.toast-alert__icon {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+
+.toast-alert--success .toast-alert__icon {
+  color: var(--state-success-foreground);
+}
+
+.toast-alert--notice .toast-alert__icon {
+  color: var(--state-destructive-foreground);
+}
+
+.toast-alert__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Toast actions are the small 28 button, not the standard 32 one. */
+.toast-alert .button {
+  box-sizing: border-box;
+  height: 28px;
+  padding: var(--spacing-2xs) 10px;
+  border-radius: var(--radius-md);
+}
+
+.toast-alert__content p {
+  margin: 0;
+}
+
+.toast-alert__title {
+  font-weight: 600;
+}
+
+.toast-alert--success .toast-alert__title {
+  color: var(--state-success-heavy);
+}
+
+.toast-alert--notice .toast-alert__title {
+  color: var(--state-destructive-heavy);
+}
+
+/* The component gives the dismiss button its own aligner: 2 of top inset, and
+   it stretches to the toast's full inner height. That aligner is what sets the
+   height of a one-line toast (32 button + 2 = 34), and in a taller toast it
+   stretches and keeps the 32 button centred. */
+.toast-alert__dismiss {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex: none;
+  padding-top: 2px;
+}
+
+.toast-alert__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  min-height: 32px;
+  flex: none;
+  padding: var(--spacing-xs);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.toast-alert__close:hover {
+  background: var(--accent);
+}

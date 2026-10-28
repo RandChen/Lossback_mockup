@@ -1,0 +1,266 @@
+/* Activity Log timeline. The dialog shell it sits in lives in dialog.css.
+
+   The dot's inner ring has no counterpart in the exported design tokens, so it
+   is named here with the Figma variable it came from. */
+:root {
+  --log-dot-ring: var(--theme-neutrals-500);
+}
+
+.dialog--activity-log {
+  width: 640px;
+  max-width: 100%;
+  max-height: min(480px, 100%);
+}
+
+.log {
+  margin: 0;
+  padding: var(--spacing-sm) var(--spacing-3xl);
+  list-style: none;
+  border-radius: var(--radius-md);
+}
+
+.log__row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.25fr) minmax(0, 1.25fr) minmax(0, 0.75fr);
+  align-items: stretch;
+  min-height: 40px;
+}
+
+/* The reason callout spans the two right-hand columns. */
+.log__row--wide {
+  grid-template-columns: minmax(0, 0.25fr) minmax(0, 2fr);
+  min-height: 0;
+}
+
+/* The rail is one line through the whole timeline. Every entry draws a full
+   row height of it — including above the first dot and below the last — so
+   neighbouring rows join up; the dot sits in a 2px break in the middle, which
+   is how the dot-line-status component is built. 2026-10-15: the main component
+   shrank the row from 60 to 40, so the segments are 13 not 23
+   (13 / 2 / dot 10 / 2 / 13). The break itself is unchanged, which is why the
+   ::before/::after arithmetic below is written against 50% rather than the
+   row height. */
+.log__rail {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.log__rail::before,
+.log__rail::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  background: var(--border);
+}
+
+/* 7 = half the 10px dot plus the 2px break. */
+.log__rail::before {
+  top: 0;
+  bottom: calc(50% + 7px);
+}
+
+.log__rail::after {
+  top: calc(50% + 7px);
+  bottom: 0;
+}
+
+/* The reason callout's rail carries no dot, so the line runs straight past. */
+.log__rail--line::before,
+.log__rail--line::after {
+  top: 0;
+  bottom: 0;
+}
+
+/* dot-line-status' remaining variants: the first row has no segment above it,
+   the last none below, and a lone row none at all. */
+.log__rail--top::before {
+  display: none;
+}
+
+.log__rail--bottom::after {
+  display: none;
+}
+
+.log__rail--noline::before,
+.log__rail--noline::after {
+  display: none;
+}
+
+/* dot-status is three concentric circles inside a 10 box: the 10 outer ring, an
+   8 ring 1 in, and the 6 core 2 in (4188:64757). An absolutely positioned child
+   measures its inset from the padding box, so the outer 1px border is already
+   discounted — the 8 ring is inset 0 and the 6 core inset 1. The old
+   `inset: 10%` resolved to 0.8px and left the core sitting off centre. */
+.log__dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--popover);
+}
+
+.log__dot::before,
+.log__dot::after {
+  content: "";
+  position: absolute;
+  border-radius: var(--radius-full);
+}
+
+/* the 8 ring */
+.log__dot::before {
+  inset: 0;
+  border: 1px solid var(--log-dot-ring);
+}
+
+/* the 6 core */
+.log__dot::after {
+  inset: 1px;
+  background: var(--state-normal);
+}
+
+/* Approved carries a 10% halo on the middle ring; rejected only tints its
+   outline, which is how the two variants differ in the component. */
+.log__dot--success {
+  border-color: var(--state-success-foreground);
+}
+
+.log__dot--success::before {
+  border-color: var(--state-success);
+  background: var(--state-success);
+}
+
+.log__dot--success::after {
+  background: var(--state-success-foreground);
+}
+
+.log__dot--destructive {
+  border-color: var(--state-destructive-foreground);
+}
+
+.log__dot--destructive::before {
+  border-color: var(--state-destructive);
+}
+
+.log__dot--destructive::after {
+  background: var(--state-destructive-foreground);
+}
+
+.log__status {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 10px var(--spacing-sm);
+}
+
+.log__label {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.log__label--success {
+  color: var(--state-success-foreground);
+  font-weight: 600;
+}
+
+.log__label--destructive {
+  color: var(--state-destructive-foreground);
+  font-weight: 600;
+}
+
+.log__actor {
+  color: var(--info);
+  white-space: nowrap;
+}
+
+.log__date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--spacing-sm);
+  color: var(--info);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: right;
+}
+
+/* ---------- Reason callout ----------------------------------------------- */
+/* Alert - Nova lives in app.css; inside the timeline it just needs the inset
+   that keeps it clear of the rail. The area's status frame carries
+   8 / 12 / 16 / 12 — more room below than above, so the next entry's header
+   does not crowd it (5288:34272). */
+.log__row--wide .alert {
+  margin: var(--spacing-xs) var(--spacing-sm) var(--spacing-md);
+}
+
+@media (max-width: 720px) {
+  .log {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .log__row,
+  .log__row--wide {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .log__date {
+    grid-column: 2;
+    justify-content: flex-start;
+    padding-bottom: var(--spacing-xs);
+  }
+}
+
+/* ---------- Log entry body (log-progress-list-area) ---------------------- */
+/* Promoted out of distribution-records.css 2026-10-13: log-structure is a
+   registered component now, and the Storybook shows it too. */
+/* An entry is two rows: the log-progress-list header (action, actor, time) and
+   the log-progress-list-area / log-structure body under it (5288:34272). */
+.log__row--structure {
+  grid-template-columns: minmax(0, 0.25fr) minmax(0, 2fr);
+  min-height: 0;
+}
+
+.log-structure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm) var(--spacing-md);
+  min-width: 0;
+}
+
+.log-structure__count {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Two different gaps in one row: the component puts 8 between the label and
+   the tags, but only 3 between tag / arrow / tag. The row carries the 3 and the
+   label makes up the other 5. */
+.log-structure__field {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.log-structure__field-name {
+  margin-right: 5px;
+}
+
+.log-structure__arrow {
+  color: var(--foreground);
+}
+
+.log-structure__ids {
+  margin: 0;
+  color: var(--foreground);
+  word-break: break-word;
+}
+
+.log-structure__more {
+  margin-left: var(--spacing-xs);
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Promotion Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/calendar.css" />
+<link rel="stylesheet" href="css/date-range-picker.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/toast.css" />
+<link rel="stylesheet" href="css/bonus-list.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <button type="button" class="nav-item nav-item--active" aria-expanded="true">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="nav-sub">
+          <a class="nav-sub-item nav-sub-item--active" href="#" aria-current="page">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Lossback</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">99</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="area">
+
+        <div class="page-head">
+          <div class="page-head__title">
+            <p class="breadcrumb">Bonus Management</p>
+            <div class="page-head__heading">
+              <h1>Lossback</h1>
+              <span class="marker">
+                <span class="icon icon--help" aria-hidden="true"></span>
+                <a class="marker__link" href="#">User Guide</a>
+              </span>
+            </div>
+          </div>
+          <a class="button button--primary" href="create-bonus.html">
+            <span class="icon icon--plus" aria-hidden="true"></span>
+            Create Campaign
+          </a>
+        </div>
+
+        <section class="filter-card" aria-label="Filters">
+          <div class="field">
+            <label class="field__label" for="promotion-name">Promotion Name</label>
+            <div class="input">
+              <span class="icon icon--search" aria-hidden="true"></span>
+              <input id="promotion-name" type="text" placeholder="Search by promotion name or ID" />
+            </div>
+          </div>
+
+          <div class="field" data-date-range-picker>
+            <label class="field__label" id="distribution-date-label">Distribution Date</label>
+            <button
+              type="button"
+              class="date-trigger"
+              data-role="trigger"
+              aria-labelledby="distribution-date-label"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+            >
+              <span class="date-trigger__value">
+                <span class="date-trigger__date" data-role="from-label">Start date</span>
+                <span class="icon icon--arrow-right" aria-hidden="true"></span>
+                <span class="date-trigger__date" data-role="to-label">End date</span>
+              </span>
+              <span class="icon icon--calendar" aria-hidden="true"></span>
+            </button>
+
+            <div class="popover" data-role="popover" role="dialog" aria-labelledby="distribution-date-label" hidden>
+              <div class="popover__slot">
+                <div class="calendar">
+                  <div class="calendar__header">
+                    <button type="button" class="icon-button icon-button--outline" data-nav="prev" aria-label="Previous month">
+                      <span class="icon icon--nav-left" aria-hidden="true"></span>
+                    </button>
+                    <p class="calendar__caption" data-caption="0" aria-live="polite"></p>
+                    <span class="calendar__spacer" aria-hidden="true"></span>
+                    <p class="calendar__caption" data-caption="1" aria-live="polite"></p>
+                    <button type="button" class="icon-button icon-button--outline" data-nav="next" aria-label="Next month">
+                      <span class="icon icon--nav-right" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <div class="calendar__months" data-role="months"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field filter-select" data-role="status-filter">
+            <label class="field__label" id="status-label">Status</label>
+            <button type="button" class="select" aria-labelledby="status-label" aria-haspopup="listbox" aria-expanded="false" data-role="status-trigger">
+              <span class="select__tags" data-role="status-value"><span class="select__placeholder">Select</span></span>
+              <span class="icon icon--chevron-down" aria-hidden="true"></span>
+            </button>
+            <div class="filter-select__panel" data-role="status-panel" hidden></div>
+          </div>
+
+          <button type="button" class="button button--ghost filter-card__reset">
+            <span class="icon icon--reset" aria-hidden="true"></span>
+            Reset
+          </button>
+        </section>
+
+        <div class="table" role="table" aria-label="Free Bet bonus promotions">
+          <div class="table__head" role="row">
+            <div class="table__th" role="columnheader">Bonus Promotion</div>
+            <div class="table__th" role="columnheader">Distribution Date</div>
+            <div class="table__th" role="columnheader">Expiry Date</div>
+            <div class="table__th" role="columnheader">Created By</div>
+            <div class="table__th" role="columnheader">Status</div>
+            <div class="table__th" role="columnheader">Reports</div>
+            <div class="table__th" role="columnheader">Actions</div>
+          </div>
+          <div data-role="rows"></div>
+          <div class="table-empty" data-role="empty-none" hidden>
+            <img class="table-empty__art" src="icons/empty.svg" width="180" height="180" alt="" />
+            <div class="table-empty__content">
+              <p class="table-empty__title">No Bonus promotions have been established yet.</p>
+              <p class="table-empty__hint">Create your first Bonus promotion.</p>
+            </div>
+            <a class="button button--primary" href="create-bonus.html">
+              <span class="icon icon--plus" aria-hidden="true"></span>
+              Create Campaign
+            </a>
+          </div>
+          <div class="table-empty" data-role="empty-filtered" hidden>
+            <img class="table-empty__art" src="icons/nodata.svg" width="180" height="180" alt="" />
+            <div class="table-empty__content">
+              <p class="table-empty__title">No results found.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pager">
+          <p class="pager__count">1–5 / 5</p>
+          <nav class="pagination" aria-label="Pagination">
+            <button type="button" class="button button--ghost">Previous</button>
+            <div class="pagination__pages">
+              <button type="button" class="pagination__page pagination__page--current" aria-current="page">1</button>
+              <button type="button" class="pagination__page">2</button>
+              <button type="button" class="pagination__page">3</button>
+            </div>
+            <button type="button" class="button button--ghost">Next</button>
+          </nav>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="toast-stack" data-role="toasts"></div>
+
+<div class="backdrop" data-role="confirm-dialog" hidden>
+  <div class="dialog dialog--alert" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-text">
+    <div class="dialog__body alert-dialog__body">
+      <span class="alert-dialog__mark" data-role="confirm-mark" aria-hidden="true">
+        <span class="icon" data-role="confirm-icon"></span>
+      </span>
+      <h2 class="alert-dialog__title" id="confirm-title"></h2>
+      <p class="alert-dialog__text" id="confirm-text" data-role="confirm-text"></p>
+    </div>
+    <div class="dialog__footer alert-dialog__footer">
+      <button type="button" class="button button--outline" data-role="confirm-cancel">Cancel</button>
+      <button type="button" class="button button--primary" data-role="confirm-ok"></button>
+    </div>
+  </div>
+</div>
+
+<script src="js/role.js"></script>
+<script src="js/date-range-picker.js"></script>
+<script src="js/bonus-list.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+/* Create Bonus — Step 3 (Recipients). Builds on create-bonus.css and
+   create-bonus-step2.css for the wizard chrome, cards and segmented control. */
+
+.card__head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+/* ---------- Upload requirements ------------------------------------------ */
+.requirements {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--note-background);
+  border-radius: var(--radius-md);
+}
+
+.requirements__title {
+  margin: 0;
+  font-weight: 500;
+}
+
+.requirements ul {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  color: var(--muted-foreground);
+}
+
+.requirements__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.requirements__actions .button--secondary {
+  align-self: auto;
+}
+
+/* ---------- List toolbar -------------------------------------------------- */
+.list-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.list-toolbar[hidden] {
+  display: none;
+}
+
+.list-toolbar .input {
+  flex: 1 1 260px;
+  min-width: 0;
+  max-width: 320px;
+}
+
+.list-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* ---------- Empty state --------------------------------------------------- */
+/* The UX draws 50px of breathing room top and bottom and a 14px rhythm between
+   the icon, heading and description; both are off the spacing scale, so this
+   takes the nearest scale steps (4xl = 48, md = 16). */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-4xl) var(--spacing-md);
+  background: var(--theme-neutrals-50);
+  text-align: center;
+}
+
+.empty-state[hidden] {
+  display: none;
+}
+
+.empty-state__title {
+  margin: 0;
+  font-weight: 500;
+}
+
+.empty-state__hint {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* Pressing Next with nothing in the list turns the whole Recipient List block
+   red — header bar included — rather than putting the complaint somewhere else
+   (UX 4787:72382). The art stays, but drops to grey so the red reads as the
+   only colour carrying meaning. */
+/* .list-section sets the border further down this file, so this one is scoped
+   tighter rather than relying on order. */
+.list-section.list-section--error {
+  background: var(--state-destructive-soft);
+  border-color: var(--state-destructive-foreground);
+}
+
+.list-section--error .list-section__bar {
+  background: transparent;
+}
+
+.list-section--error .list-section__title,
+.list-section--error .empty-state__title,
+.list-section--error .empty-state__hint {
+  color: var(--state-destructive-foreground);
+}
+
+.list-section--error .empty-state {
+  background: transparent;
+}
+
+.list-section--error .empty-state__art {
+  filter: grayscale(1);
+}
+
+/* ---------- Recipient table ----------------------------------------------- */
+.recipient-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.recipient-table[hidden] {
+  display: none;
+}
+
+.recipient-table__head,
+.recipient-row {
+  display: grid;
+  grid-template-columns: 36px 40px minmax(0, 1.4fr) minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 0.7fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.recipient-table--import .recipient-table__head,
+.recipient-table--import .recipient-row {
+  grid-template-columns: 48px minmax(0, 1.4fr) minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 0.7fr) minmax(0, 1.6fr);
+}
+
+.recipient-table__head {
+  background: var(--table-title);
+  color: var(--secondary-foreground);
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+
+.recipient-row {
+  border-bottom: 1px solid var(--border);
+}
+
+.recipient-row:last-child {
+  border-bottom: 0;
+}
+
+.recipient-row--invalid {
+  background: var(--state-destructive-soft);
+}
+
+.recipient-row__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  justify-self: start;
+}
+
+.recipient-row__error {
+  color: var(--state-destructive-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.recipient-table__empty {
+  margin: 0;
+  padding: var(--spacing-lg);
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.recipient-table input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--primary);
+}
+
+/* ---------- List footer + totals ------------------------------------------ */
+.list-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.list-footer[hidden] {
+  display: none;
+}
+
+.list-footer__total {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* The three totals sit in Card - Nova boxes rather than as plain text: white,
+   1px border, 14 radius, 16 inset and 8 between the label and the value.
+   Elena set the column ratio at 1:1:2; the wireframe's 14 gutter is off the
+   spacing scale, so the row uses the nearest step. */
+.totals {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: var(--spacing-md);
+  margin: 0;
+}
+
+.totals[hidden] {
+  display: none;
+}
+
+.totals > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0;
+  padding: var(--spacing-md);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+}
+
+.totals dt {
+  color: var(--info);
+}
+
+.totals dd {
+  display: flex;
+  flex-direction: column;
+  /* The currency lines need a little air between them; the wireframe's 6 is
+     off the spacing scale, so this takes the nearest step. */
+  gap: var(--spacing-2xs);
+  margin: 0;
+  font-weight: 600;
+}
+
+.totals .amount-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2xs);
+}
+
+/* ---------- Recipients dialog --------------------------------------------- */
+/* The wide Dialog - Nova, the width the UI file uses for the Activity Log.
+   This dialog carries the same kind of tabular content. */
+.dialog--recipients {
+  width: 640px;
+  max-height: min(680px, 100%);
+}
+
+.dialog--recipients .dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* The UX groups the bulk fields into their own filled block. */
+.bulk {
+  padding: var(--spacing-md);
+  background: var(--muted);
+  border-radius: var(--radius-lg);
+}
+
+.bulk__title {
+  margin: 0 0 var(--spacing-xs);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.bulk__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Column labels sit at body size in the UX, not as small captions. */
+.bulk__label,
+.recipients__head {
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.bulk__hint {
+  margin: var(--spacing-xs) 0 0;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Three equal columns; the remove button hangs in a gutter outside them, and
+   the first row never has one, so the gutter stays empty there. */
+.recipients__head,
+.recipient-input-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) 20px;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.recipients__head {
+  margin-bottom: var(--spacing-2xs);
+}
+
+.recipient-input-row {
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Input - Nova's Left/Right positions: one rounded pair of segments sharing a
+   seam, with the currency reading as the field's fixed prefix. */
+.input-group {
+  display: flex;
+  min-width: 0;
+}
+
+.input-group__addon {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: var(--muted);
+  border: 1px solid var(--input);
+  border-right: 0;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  color: var(--foreground);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.input-group__addon--empty {
+  color: var(--muted-foreground);
+}
+
+.input-group .control {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+/* Add Recipient is a text action, not a filled button. */
+.recipients__add {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.recipient-input-row__error {
+  grid-column: 1 / -1;
+  margin: 0 0 var(--spacing-xs);
+  color: var(--state-destructive-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+
+/* Inside a field the currency is Input - Nova's prepend text, not a chip — the
+   chip form is only for the standalone amounts in the totals and the review. */
+.control .currency {
+  min-width: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* ---------- Import preview ------------------------------------------------ */
+.dialog--import {
+  width: 880px;
+  max-height: min(680px, 100%);
+}
+
+.import-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+}
+
+.import-filter {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Below the table's usable width the seven columns stop lining up, so each row
+   becomes a labelled block instead: the member ID leads, every other value
+   prints its column name above it, and the header row is dropped because each
+   cell now carries its own. */
+@media (max-width: 960px) {
+  .recipient-table__head,
+  .recipient-table--import .recipient-table__head {
+    display: none;
+  }
+
+  .recipient-row,
+  .recipient-table--import .recipient-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--spacing-2xs) var(--spacing-sm);
+    align-items: start;
+    padding: var(--spacing-sm);
+  }
+
+  /* The checkbox keeps its own column beside the whole block; everything else
+     stacks one per line so no value can be read against the wrong label. */
+  .recipient-row > * {
+    grid-column: 2;
+  }
+
+  .recipient-row > :first-child {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+
+  .recipient-row > [data-label="#"],
+  .recipient-row > [data-label="Row"] {
+    display: none;
+  }
+
+  .recipient-row > [data-label="Vendor Member ID"] {
+    font-weight: 500;
+  }
+
+  .recipient-row > [data-label]:not([data-label="Vendor Member ID"])::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--info);
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .recipient-row__actions {
+    justify-self: start;
+  }
+
+  .totals {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* One "Batch Action" control, as the UX names it: a single trigger that opens
+   the bulk edit and delete items. */
+/* Add Recipients offers two actions, each with a leading icon. Button - Nova
+   draws them at the 6/10 inset the wizard footer already uses. */
+.card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.card__actions .button {
+  padding: 6px 10px;
+}
+
+
+/* ---------- CSV requirements panel ---------------------------------------
+   The UX draws this as a bordered card with its own header row, not a plain
+   tinted box. Wireframe greys are ignored; the fills come from tokens. */
+.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.panel__title {
+  margin: 0;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  /* Same surface as the configured-sport card, so the two blocks read as one
+     family of panels. */
+  background: var(--theme-neutrals-50);
+}
+
+.panel__rules {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  color: var(--muted-foreground);
+}
+
+.panel__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* ---------- Recipient List section ---------------------------------------
+   A header bar joined directly to the body, the way a table header sits on
+   its rows — so it uses the same token as the list page's table head. */
+.list-section {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.list-section__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-height: 40px;
+  padding: var(--spacing-2xs) 10px;
+  background: var(--table-title);
+}
+
+/* The header bar is a full-bleed band; everything under it is inset by one
+   step of the spacing scale and stacked on the same rhythm. */
+.list-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+.list-section__title {
+  margin: 0;
+  color: var(--secondary-foreground);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+/* ---------- Empty state ---------------------------------------------------- */
+/* The kit's "nodata" illustration, exported whole from Figma. It is multi
+   colour, so it is an <img> rather than a masked icon — a mask would flatten
+   it to one tint. Placeholder until the empty-state artwork is designed. */
+.empty-state__art {
+  display: block;
+  width: 180px;
+  height: 180px;
+}
+
+/* The download link carries a 16px leading icon in the UX. */
+.panel__actions .link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* Lucide / user-plus — the icon the kit pairs with adding a recipient. */
+
+/* The delete dialog repeats the rows it is about to remove, read only and in
+   the list's own order, so the count is not the only thing to go on. */
+.delete-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--spacing-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.delete-list__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-top: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+.delete-list__row--head {
+  border-top: 0;
+  background: var(--muted);
+  color: var(--secondary-foreground);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.delete-list [data-role="delete-list"] {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+/* File-level upload problems sit between the section heading and the
+   requirements panel, where the UX places them. */
+.inline-error {
+  margin: 0;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border: 1px solid var(--destructive);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--destructive) 8%, var(--background));
+  color: var(--destructive);
+}
+
+/* Rows / Valid / Errors, stated side by side. */
+.import-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.import-summary__item {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.import-summary__item--error {
+  color: var(--destructive);
+}
+
+/* Each failing field gets its own line in the Issue column. */
+.issue-line {
+  display: block;
+}
+
+.issue-line + .issue-line {
+  margin-top: var(--spacing-3xs);
+}
+
+/* Only the cells that failed are editable inside the preview. */
+.issue-input {
+  width: 100%;
+  min-width: 0;
+  padding: 2px var(--spacing-2xs);
+  border: 1px solid var(--destructive);
+  border-radius: var(--radius-sm);
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+}
+
+.issue-input:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring-error);
+}
+
+/* ---------- Delete selected recipients ----------------------------------- */
+/* Not the 340 Alert Dialog: this one carries a read-only list of the rows the
+   batch action is about to remove, so it keeps its own width and plain body. */
+.dialog--delete-recipients {
+  width: 390px;
+}
+
+.dialog__body--list {
+  background: var(--popover);
+  padding-top: 0;
+  color: var(--muted-foreground);
+}
+
+.dialog__body--list > p {
+  margin: 0 0 var(--spacing-sm);
+}

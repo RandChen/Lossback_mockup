@@ -1,0 +1,196 @@
+/* Dialog - Nova: shared shell for every modal in the suite.
+
+   Two values here have no counterpart in the exported design tokens, so they
+   are named with the Figma variable they came from rather than being repeated
+   as raw hex across the rules. */
+:root {
+  --dialog-surface: var(--theme-neutrals-50);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  background: color-mix(in srgb, var(--theme-neutrals-1000) 40%, transparent);
+}
+
+.backdrop[hidden] {
+  display: none;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex: none;
+  padding: var(--spacing-md);
+}
+
+.dialog__title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 21.6px;
+  font-weight: 500;
+}
+
+.dialog__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.dialog__close:hover {
+  background: var(--accent);
+}
+
+.dialog__body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  background: var(--dialog-surface);
+}
+
+.dialog__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex: none;
+  padding: var(--spacing-md);
+  background: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* .Dialog Footer - Nova, Type=2 buttons right. */
+.dialog__footer--end {
+  justify-content: flex-end;
+}
+
+/* ---------- Alert Dialog - Nova ------------------------------------------ */
+/* One 340 card used by every confirmation: a decorative icon, a centred title
+   and description, then a footer band carrying two equal-width buttons. */
+.dialog--alert {
+  width: 340px;
+  border-radius: var(--radius-xl);
+}
+
+.dialog--alert .alert-dialog__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--card);
+  text-align: center;
+}
+
+.alert-dialog__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* Decorative Icon (OC) builds its tint by laying alpha-white-85 over the state
+   colour, so the brick is 15% of that colour on white — not the 10% the
+   state/* tokens carry. All three marks follow the component. */
+.alert-dialog__mark--destructive {
+  background: color-mix(in srgb, var(--state-destructive-foreground) 15%, var(--background));
+  color: var(--state-destructive-foreground);
+}
+
+.alert-dialog__mark--warning {
+  background: color-mix(in srgb, var(--state-warning-foreground) 15%, var(--background));
+  color: var(--state-warning-foreground);
+}
+
+.alert-dialog__mark--success {
+  background: color-mix(in srgb, var(--state-success-foreground) 15%, var(--background));
+  color: var(--state-success-foreground);
+}
+
+.alert-dialog__mark .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.alert-dialog__title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.alert-dialog__text {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* Equal columns rather than flex: with flex-basis 0 the outline button's 1px
+   border is added on top of its share, so it came out 2px wider than the solid
+   one. Grid tracks ignore the border, and auto-flow keeps the single-button
+   state (Distribution Records' Close) full width. */
+.dialog--alert .alert-dialog__footer {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--spacing-xs);
+  background: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* Both buttons carry the design's 6/10 inset so neither is wider than the
+   other just because of its label. */
+.dialog--alert .alert-dialog__footer > .button {
+  box-sizing: border-box;
+  min-width: 0;
+  height: 32px;
+  padding: 6px 10px;
+  justify-content: center;
+}
+
+.icon--trash-2 { -webkit-mask-image: url("../icons/trash.svg"); mask-image: url("../icons/trash.svg"); }
+
+/* Reject Promotion — a form dialog at the established 640, with the character
+   counter the UX puts under the field. */
+.dialog--reject {
+  width: 640px;
+}
+
+.field__counter {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: right;
+}

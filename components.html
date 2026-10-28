@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Components — Promotion Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/toast.css" />
+<link rel="stylesheet" href="css/detail.css" />
+<link rel="stylesheet" href="css/activity-log.css" />
+<link rel="stylesheet" href="css/calendar.css" />
+<link rel="stylesheet" href="css/date-range-picker.css" />
+<link rel="stylesheet" href="css/datetime-picker.css" />
+<link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <button type="button" class="nav-item" aria-expanded="true">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="nav-sub">
+          <a class="nav-sub-item" href="index.html">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Free Bet</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item nav-item--active" href="components.html" aria-current="page">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">3</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="area">
+
+        <div class="page-head">
+          <div class="page-head__title">
+            <div class="page-head__heading">
+              <h1>Components</h1>
+            </div>
+          </div>
+        </div>
+
+        <p class="story-intro">
+          Every component the product is built from, in each variant and state it
+          ships with. The specimens below are the live components — this page loads
+          the same stylesheets the product pages do, so whatever changes here has
+          changed everywhere.
+        </p>
+
+        <div class="story-layout">
+
+          <nav class="story-nav" aria-label="Components">
+            <p class="story-nav__title">On this page</p>
+            <div class="story-nav__list" data-role="nav"></div>
+          </nav>
+
+          <div class="story-body" data-role="body"></div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<template id="spec-date-picker">
+<div class="field" data-date-range-picker>
+            <label class="field__label" id="distribution-date-label">Distribution Date</label>
+            <button
+              type="button"
+              class="date-trigger"
+              data-role="trigger"
+              aria-labelledby="distribution-date-label"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+            >
+              <span class="date-trigger__value">
+                <span class="date-trigger__date" data-role="from-label">Start date</span>
+                <span class="icon icon--arrow-right" aria-hidden="true"></span>
+                <span class="date-trigger__date" data-role="to-label">End date</span>
+              </span>
+              <span class="icon icon--calendar" aria-hidden="true"></span>
+            </button>
+
+            <div class="popover" data-role="popover" role="dialog" aria-labelledby="distribution-date-label" hidden>
+              <div class="popover__slot">
+                <div class="calendar">
+                  <div class="calendar__header">
+                    <button type="button" class="icon-button icon-button--outline" data-nav="prev" aria-label="Previous month">
+                      <span class="icon icon--nav-left" aria-hidden="true"></span>
+                    </button>
+                    <p class="calendar__caption" data-caption="0" aria-live="polite"></p>
+                    <span class="calendar__spacer" aria-hidden="true"></span>
+                    <p class="calendar__caption" data-caption="1" aria-live="polite"></p>
+                    <button type="button" class="icon-button icon-button--outline" data-nav="next" aria-label="Next month">
+                      <span class="icon icon--nav-right" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <div class="calendar__months" data-role="months"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+</template>
+
+<script src="js/role.js"></script>
+<script src="js/sidebar.js"></script>
+<!-- components.js clones the picker template into the page, so the picker's own
+     script has to run after it or there is nothing for it to find. -->
+<script src="js/components.js"></script>
+<script src="js/date-range-picker.js"></script>
+</body>
+</html>

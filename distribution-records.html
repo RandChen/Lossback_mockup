@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Distribution Records — Free Bet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/notifications.css" />
+<link rel="stylesheet" href="css/detail.css" />
+<link rel="stylesheet" href="css/dialog.css" />
+<link rel="stylesheet" href="css/activity-log.css" />
+<link rel="stylesheet" href="css/toast.css" />
+<link rel="stylesheet" href="css/distribution-records.css" />
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="app-sidebar">
+    <div class="sidebar__brand">
+      <span class="icon icon--brand" aria-hidden="true"></span>
+      <span class="sidebar__brand-name">Promotion Suite</span>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Main">
+      <div class="nav-group">
+        <a class="nav-item" href="index.html">
+          <span class="icon icon--gift" aria-hidden="true"></span>
+          <span class="nav-item__label">Bonus Management</span>
+          <span class="icon icon--chevron-down" aria-hidden="true"></span>
+        </a>
+        <div class="nav-sub">
+          <a class="nav-sub-item nav-sub-item--active" href="index.html" aria-current="page">
+            <span class="nav-sub-item__leaf" aria-hidden="true"></span>
+            <span class="nav-sub-item__label">Free Bet</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="nav-item" href="approval-inbox.html">
+        <span class="icon icon--inbox" aria-hidden="true"></span>
+        <span class="nav-item__label">Approval Inbox</span>
+        <span class="nav-badge">3</span>
+      </a>
+
+      <a class="nav-item" href="components.html">
+        <span class="icon icon--brand-component" aria-hidden="true"></span>
+        <span class="nav-item__label">Components</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="sidebar-scrim" data-role="sidebar-scrim" hidden></div>
+
+  <div class="app__main">
+    <header class="topbar">
+      <button type="button" class="icon-button sidebar-trigger" data-role="sidebar-trigger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="app-sidebar">
+        <span class="icon icon--panel-left" aria-hidden="true"></span>
+      </button>
+      <div class="topbar__time">
+        <span class="icon icon--clock" aria-hidden="true"></span>
+        <span>00:25:34 Jul 27, 2026 GMT-4</span>
+      </div>
+      <button type="button" class="chip">
+        <span class="icon icon--user" aria-hidden="true"></span>
+        Licensee
+      </button>
+      <div class="notification">
+        <button type="button" class="icon-button" aria-label="Notifications">
+          <span class="icon icon--bell" aria-hidden="true"></span>
+        </button>
+        <span class="notification__badge">3</span>
+      </div>
+    </header>
+
+    <main class="app__content">
+      <div class="detail">
+
+        <!-- Same as the Bonus Detail page: the back link, the tabs and the rule
+             run the full content width; only the page's own content sits in the
+             column below. -->
+        <div class="detail__top">
+          <a class="back-link" href="index.html">
+            <span class="icon icon--chevron-left" aria-hidden="true"></span>
+            Free Bet
+          </a>
+
+          <nav class="tabs" aria-label="Bonus promotion sections">
+            <a class="tab" href="detail.html?status=distributed">
+              <span class="tab__label">Overview</span>
+            </a>
+            <a class="tab tab--active" href="#" aria-current="page">
+              <span class="tab__label">Distribution Records</span>
+            </a>
+            <a class="tab" href="usage-report.html">
+              <span class="tab__label">Usage Report</span>
+            </a>
+          </nav>
+        </div>
+
+        <div class="records__column">
+
+          <!-- The page's own heading sits under the tabs with the log beside it;
+               Export as CSV belongs to the Record List, not here (4606:33052). -->
+          <div class="page-head">
+            <div class="page-head__title">
+              <div class="page-head__heading">
+                <h1>Distribution Records</h1>
+              </div>
+            </div>
+            <div class="records__actions">
+              <button type="button" class="button button--outline" data-role="open-activity-log">
+                <span class="icon icon--file-symlink" aria-hidden="true"></span>
+                Activity Log
+              </button>
+            </div>
+          </div>
+
+          <p class="records__date">Distribution Date: 2026/07/28 10:00 (GMT-4)</p>
+
+          <!-- Summary. Recalled is a dynamic cell: it appears only once a recall
+               has succeeded, and Failed carries Retry All while anything is
+               still failed. -->
+          <section class="summary" aria-label="Distribution summary">
+            <div class="summary__item">
+              <p class="summary__label">Total Recipients</p>
+              <p class="summary__value" data-role="total-recipients">200</p>
+            </div>
+            <div class="summary__item">
+              <p class="summary__label">Total Vouchers</p>
+              <p class="summary__value" data-role="total-vouchers">500</p>
+            </div>
+            <div class="summary__item">
+              <p class="summary__label">Success</p>
+              <p class="summary__value summary__value--success" data-role="total-success">480</p>
+            </div>
+            <div class="summary__item">
+              <p class="summary__label">Failed</p>
+              <p class="summary__value summary__value--failed" data-role="total-failed">20</p>
+            </div>
+            <div class="summary__item" data-role="recalled-item" hidden>
+              <p class="summary__label">Recalled</p>
+              <p class="summary__value" data-role="total-recalled">0</p>
+            </div>
+          </section>
+
+          <!-- Two alert bars, each judged on its own: Retry above Recall when
+               both are up (4606:33754). Their CTAs work on the whole list, not
+               on the filtered view. -->
+          <div class="alert alert--destructive alert--page" data-role="retry-alert" hidden>
+            <span class="icon icon--circle-alert" aria-hidden="true" data-role="retry-alert-icon"></span>
+            <span class="alert__spinner" aria-hidden="true" data-role="retry-alert-spinner" hidden></span>
+            <div class="alert__content">
+              <p class="alert__title" data-role="retry-alert-text">0 distributions failed.</p>
+            </div>
+            <button type="button" class="button button--outline button--xs" data-role="alert-retry">Retry</button>
+          </div>
+
+          <div class="alert alert--destructive alert--page" data-role="recall-alert" hidden>
+            <span class="icon icon--circle-alert" aria-hidden="true" data-role="recall-alert-icon"></span>
+            <span class="alert__spinner" aria-hidden="true" data-role="recall-alert-spinner" hidden></span>
+            <div class="alert__content">
+              <p class="alert__title" data-role="recall-alert-text">0 bonus recalls failed.</p>
+            </div>
+            <button type="button" class="button button--outline button--xs" data-role="alert-recall">Recall</button>
+          </div>
+
+          <section class="card records__list">
+            <div class="card__head records__list-head">
+              <h2 class="card__title">Record List</h2>
+              <!-- Three menu buttons. Whether a button shows at all is judged on
+                   the whole list; whether it is enabled is judged on what the
+                   filters currently show, plus what is ticked (4895:144385). -->
+              <div class="records__list-actions">
+                <div class="batch-action" data-role="export">
+                  <button type="button" class="button button--outline" data-role="export-trigger" aria-haspopup="menu" aria-expanded="false">
+                    <span class="icon icon--download" aria-hidden="true"></span>
+                    Export All
+                    <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                  </button>
+                  <div class="batch-action__menu" data-role="export-menu" role="menu" hidden>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="export-all">All records</button>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="export-filtered">Filtered results</button>
+                  </div>
+                </div>
+
+                <div class="batch-action" data-role="retry-menu-wrap" hidden>
+                  <button type="button" class="button button--outline" data-role="retry-trigger" aria-haspopup="menu" aria-expanded="false">
+                    Retry Distribution
+                    <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                  </button>
+                  <div class="batch-action__menu" data-role="retry-menu" role="menu" hidden>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="retry-all">Retry all failed</button>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="retry-selected">Retry selected</button>
+                  </div>
+                </div>
+
+                <div class="batch-action" data-role="recall-menu-wrap" hidden>
+                  <button type="button" class="button button--outline button--destructive-text" data-role="recall-trigger" aria-haspopup="menu" aria-expanded="false">
+                    Recall Bonus
+                    <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                  </button>
+                  <div class="batch-action__menu" data-role="recall-menu" role="menu" hidden>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="recall-all">Recall all unused</button>
+                    <button type="button" class="batch-action__item" role="menuitem" data-role="recall-selected">Recall selected</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section class="filter-card records__filters dr-filters" aria-label="Filters">
+              <div class="field">
+                <label class="field__label" for="record-search">Vendor Member ID / Voucher ID</label>
+                <div class="input">
+                  <span class="icon icon--search" aria-hidden="true"></span>
+                  <input id="record-search" type="text" placeholder="Search by Member or Voucher ID" data-role="search" />
+                </div>
+              </div>
+
+              <!-- Oneworks only: the operator sees every site, so it can narrow
+                   to one. Hidden for the Licensee build (UX 5673:84525). -->
+              <div class="field filter-select" data-role="site-filter" hidden>
+                <label class="field__label" id="site-label">Site Name</label>
+                <button type="button" class="select" aria-labelledby="site-label" aria-haspopup="listbox" aria-expanded="false" data-role="site-trigger">
+                  <span class="select__tags" data-role="site-value"><span class="select__placeholder">Select</span></span>
+                  <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                </button>
+                <div class="filter-select__panel" data-role="site-panel" hidden></div>
+              </div>
+
+              <div class="field filter-select" data-role="currency-filter">
+                <label class="field__label" id="currency-label">Currency</label>
+                <button type="button" class="select" aria-labelledby="currency-label" aria-haspopup="listbox" aria-expanded="false" data-role="currency-trigger">
+                  <span class="select__tags" data-role="currency-value"><span class="select__placeholder">Select</span></span>
+                  <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                </button>
+                <div class="filter-select__panel" data-role="currency-panel" hidden></div>
+              </div>
+
+              <div class="field filter-select" data-role="result-filter">
+                <label class="field__label" id="result-label">Distribution Result</label>
+                <button type="button" class="select" aria-labelledby="result-label" aria-haspopup="listbox" aria-expanded="false" data-role="result-trigger">
+                  <span class="select__tags" data-role="result-value"><span class="select__placeholder">Select</span></span>
+                  <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                </button>
+                <div class="filter-select__panel" data-role="result-panel" hidden></div>
+              </div>
+
+              <div class="field filter-select" data-role="status-filter">
+                <label class="field__label" id="voucher-status-label">Voucher Status</label>
+                <button type="button" class="select" aria-labelledby="voucher-status-label" aria-haspopup="listbox" aria-expanded="false" data-role="status-trigger">
+                  <span class="select__tags" data-role="status-value"><span class="select__placeholder">Select</span></span>
+                  <span class="icon icon--chevron-down" aria-hidden="true"></span>
+                </button>
+                <div class="filter-select__panel" data-role="status-panel" hidden></div>
+              </div>
+
+              <button type="button" class="button button--ghost filter-card__reset" data-role="reset" disabled>
+                <span class="icon icon--reset" aria-hidden="true"></span>
+                Reset
+              </button>
+            </section>
+
+            <!-- Selected bar: appears as soon as anything is ticked, and Clear
+                 selection drops the whole row along with the ticks. -->
+            <div class="selected-bar" data-role="selected-bar" hidden>
+              <p class="selected-bar__count"><strong data-role="selected-count">0</strong> selected</p>
+              <button type="button" class="link-button" data-role="clear-selection">Clear selection</button>
+            </div>
+
+            <div class="table records-table" role="table" aria-label="Distribution records" data-role="table">
+              <div class="table__head" role="row">
+                <div class="table__th records-table__check" role="columnheader">
+                  <span class="has-tooltip">
+                    <input type="checkbox" class="checkbox" data-role="select-all" aria-label="Select all records" />
+                    <span class="tooltip tooltip--start tooltip--below" data-role="select-all-tip" hidden></span>
+                  </span>
+                </div>
+                <div class="table__th" role="columnheader" data-role="site-column" hidden>Site Name</div>
+                <div class="table__th" role="columnheader">Vendor Member ID</div>
+                <div class="table__th" role="columnheader">Distribution Result</div>
+                <div class="table__th" role="columnheader">Voucher ID</div>
+                <div class="table__th" role="columnheader">Voucher Status</div>
+                <div class="table__th" role="columnheader">Currency</div>
+                <div class="table__th" role="columnheader">Denomination</div>
+              </div>
+              <div data-role="rows"></div>
+
+              <div class="table-empty" data-role="empty" hidden>
+                <img class="table-empty__art" src="icons/nodata.svg" width="180" height="180" alt="" />
+                <div class="table-empty__content">
+                  <p class="table-empty__title">No results found.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pager" data-role="pager">
+              <p class="pager__count" data-role="range">1–50 / 500</p>
+              <div class="records__per-page">
+                <label class="field__label" for="per-page">Row per page</label>
+                <span class="select-native">
+                  <select id="per-page" class="select records__per-page-select" data-role="per-page">
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                  </select>
+                  <span class="icon icon--chevron-down select-native__chevron" aria-hidden="true"></span>
+                </span>
+              </div>
+              <nav class="pagination" aria-label="Pagination">
+                <button type="button" class="button button--ghost" data-role="prev">Previous</button>
+                <div class="pagination__pages" data-role="pages"></div>
+                <button type="button" class="button button--ghost" data-role="next">Next</button>
+              </nav>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Retry / Recall confirmation. Alert Dialog - Nova, and it switches in place
+     to the running state rather than opening a second dialog. -->
+<div class="backdrop" data-role="action-dialog" hidden>
+  <div class="dialog dialog--alert" role="alertdialog" aria-modal="true" aria-labelledby="action-title" aria-describedby="action-text">
+    <div class="dialog__body alert-dialog__body">
+      <span class="alert-dialog__mark" data-role="action-mark" aria-hidden="true">
+        <span class="icon" data-role="action-icon"></span>
+      </span>
+      <h2 class="alert-dialog__title" id="action-title" data-role="action-title">Retry 20 failed distributions?</h2>
+      <p class="alert-dialog__text" id="action-text" data-role="action-text"></p>
+    </div>
+    <div class="dialog__footer alert-dialog__footer">
+      <button type="button" class="button button--outline" data-role="action-cancel">Cancel</button>
+      <button type="button" class="button button--primary" data-role="action-confirm">Retry</button>
+      <button type="button" class="button button--outline" data-role="action-close" hidden>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Activity Log popup: every Retry and Recall, newest first. -->
+<div class="backdrop" data-role="activity-dialog" hidden>
+  <div class="dialog dialog--activity-log" role="dialog" aria-modal="true" aria-labelledby="activity-title">
+    <div class="dialog__header">
+      <h2 class="dialog__title" id="activity-title">Activity Log</h2>
+      <button type="button" class="dialog__close" data-role="activity-close" aria-label="Close">
+        <span class="icon icon--x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="dialog__body">
+      <ol class="log" data-role="log"></ol>
+      <div class="table-empty table-empty--sm" data-role="log-empty" hidden>
+        <img class="table-empty__art" src="icons/nodata.svg" width="90" height="90" alt="" />
+        <div class="table-empty__content">
+          <p class="table-empty__title">No activity yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" data-role="toasts"></div>
+
+<script src="js/role.js"></script>
+<script src="js/distribution-records.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/sidebar.js"></script>
+</body>
+</html>

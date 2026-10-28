@@ -1,0 +1,586 @@
+/* Create Bonus — Step 1 (General). */
+
+/* main-content is inset 20 on every side and sits on the tinted page, so the
+   white cards read as raised. The back link spans that full width; the title,
+   the steps, the cards and the footer sit in a 750 column centred under it. */
+.wizard {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  /* The tint fills the scroll area even when the form is shorter than the
+     window, so it never stops part-way down the page. */
+  min-height: 100%;
+  padding: var(--spacing-lg);
+  background: var(--theme-neutrals-50);
+}
+
+.wizard__top {
+  display: flex;
+  align-items: center;
+}
+
+.wizard__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 750px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* The cards and the footer are 20 apart, the step indicator 16 above them. */
+.wizard__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.wizard__head {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+}
+
+.wizard__head h1 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 26.4px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+/* The group title is drawn at the same 14/20 Medium as a field label, not as a
+   larger heading (4276:14251). */
+.field-group__title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.field-group [data-role="language-fields"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.field-group [data-role="language-fields"]:empty {
+  display: none;
+}
+
+/* ---------- Added language rows ------------------------------------------ */
+.field__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+}
+
+.field__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.field__remove:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
+/* ---------- Stale-settings message ---------------------------------------- */
+/* Alert - Nova, Error variant, listing settings that stopped being valid while
+   the draft sat. Each line ends with its own Go to Step N. */
+.stale-message__item {
+  margin: 0;
+}
+
+.stale-message__item + .stale-message__item {
+  margin-top: var(--spacing-2xs);
+}
+
+.stale-message__go {
+  margin-left: var(--spacing-2xs);
+}
+
+/* ---------- Buttons ------------------------------------------------------ */
+/* The wizard stacks this one, so it keeps its own alignment. */
+.wizard .button--secondary,
+.card .button--secondary {
+  align-self: flex-start;
+}
+
+/* A destructive text action. The kit has no tinted destructive button, so this
+   is Button - Nova's Ghost variant carrying the destructive label colour —
+   shadcn's own pattern for a destructive action that is not the primary one. */
+.button--destructive-ghost {
+  background: transparent;
+  color: var(--state-destructive-foreground);
+}
+
+.button--destructive-ghost:hover:not([disabled]) {
+  background: var(--accent);
+}
+
+.wizard__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  min-height: 52px;
+}
+
+/* Footer buttons keep the compact 10px side padding from the design. */
+.wizard__footer .button {
+  padding: 6px 10px;
+}
+
+.wizard__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* ---------- Select Languages dialog -------------------------------------- */
+.dialog--languages {
+  width: 390px;
+  max-height: min(520px, 100%);
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: var(--accent);
+}
+
+.option input {
+  width: 14px;
+  height: 14px;
+  margin: 1px;
+  accent-color: var(--primary);
+}
+
+.option-list__empty {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.dialog__footer-lead {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+.selected-count {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.selected-count strong {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+/* Clear is the short 28 button with a wider inset; the confirm button keeps the
+   standard 6/10 one, both from the UI file's Dialog - Nova footer. */
+.dialog--languages [data-role="clear-languages"] {
+  box-sizing: border-box;
+  height: 28px;
+  padding: var(--spacing-2xs) var(--spacing-md);
+}
+
+.dialog--languages .dialog__footer > .button:not([data-role="clear-languages"]) {
+  padding: 6px 10px;
+}
+
+/* ---------- Leave dialog -------------------------------------------------- */
+
+
+
+@media (max-width: 960px) {
+  .wizard {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+}
+
+/* ==========================================================================
+   2026-10-26 Campaign requirements (Step 1)
+   ========================================================================== */
+
+/* Step 1 now holds several cards; the form is the stack that holds them. */
+.wizard__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.card__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.card__intro .field__description {
+  margin: 0;
+}
+
+/* ---------- Who join the campaign ---------------------------------------- */
+.participant-picker {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.participant-picker__search {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.participant-picker__search .icon {
+  color: var(--muted-foreground);
+}
+
+.participant-picker__search:focus-within {
+  box-shadow: none;
+}
+
+.participant-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: var(--spacing-2xs);
+}
+
+.participant-list--static {
+  max-height: none;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--theme-neutrals-50);
+}
+
+.participant-list__empty {
+  margin: 0;
+  padding: var(--spacing-xs);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.participant {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+label.participant:hover {
+  background: var(--accent);
+}
+
+.participant--sub {
+  padding-left: calc(var(--spacing-xs) + 24px);
+}
+
+.participant--static {
+  cursor: default;
+  padding: var(--spacing-sm);
+}
+
+.participant__text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.participant__name {
+  font-weight: 500;
+}
+
+.participant__parent {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.participant__kind {
+  flex: none;
+}
+
+/* The Site ID is the one thing that tells two same-named subsidiaries apart,
+   so it is set in tabular figures and kept on one line. */
+.participant__id {
+  flex: none;
+  min-width: 128px;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.participant-picker__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Language blocks ---------------------------------------------- */
+.lang-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.lang-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.lang-block__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+}
+
+.lang-block__title {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+
+.lang-block .field__description {
+  margin: 0;
+}
+
+.lang-block__tnc {
+  height: 120px;
+}
+
+.banner-upload {
+  display: flex;
+}
+
+.banner-file {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-xs);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.field--invalid .banner-file,
+.field--invalid .banner-upload__button,
+.field--invalid .participant-picker {
+  border-color: var(--destructive);
+}
+
+.banner-file__thumb {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--theme-neutrals-50);
+  color: var(--muted-foreground);
+}
+
+.banner-file__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-file__meta {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.banner-file__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.banner-file__size {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/* ---------- Promotion page ----------------------------------------------- */
+.control--order {
+  width: 120px;
+}
+
+@media (max-width: 600px) {
+  .participant {
+    flex-wrap: wrap;
+  }
+
+  .participant__id {
+    min-width: 0;
+    text-align: left;
+  }
+}
+
+/* ==========================================================================
+   Lossback (2026-10-27): per-site user groups, Desktop + Mobile banners
+   ========================================================================== */
+.ug-sites {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.ug-site {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.ug-site--invalid {
+  border-color: var(--destructive);
+}
+
+.ug-site .field__error {
+  margin: 0;
+}
+
+.ug-site__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.ug-site__title,
+.ug-site__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 0;
+}
+
+.ug-site__name {
+  font-weight: 600;
+}
+
+.ug-site__meta .participant__id {
+  min-width: 0;
+}
+
+.cs-table--ugroup .cs-table__body {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.cs-table--ugroup .cs-table__head,
+.cs-table--ugroup .cs-table__row {
+  grid-template-columns: 20px minmax(0, 1.4fr) 64px minmax(0, 1.4fr) 28px;
+}
+
+.cs-table--csv3 .cs-table__head,
+.cs-table--csv3 .cs-table__row {
+  grid-template-columns: 48px minmax(0, 1.2fr) minmax(0, 2fr);
+}
+
+.banner-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-md);
+}
+
+.banner-pair .field {
+  min-width: 0;
+}
+
+.banner-pair .banner-file {
+  flex-wrap: wrap;
+}
+
+.banner-pair .banner-file__meta {
+  min-width: 0;
+  flex: 1 1 80px;
+}
+
+@media (max-width: 720px) {
+  .banner-pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cs-table--ugroup .cs-table__head,
+  .cs-table--ugroup .cs-table__row {
+    grid-template-columns: 20px minmax(0, 1fr) 56px 28px;
+  }
+
+  .cs-table--ugroup [data-col="source"] {
+    display: none;
+  }
+}
